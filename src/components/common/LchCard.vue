@@ -1,5 +1,5 @@
 <template>
-  <div style="padding: 0 20px 20px 0;">
+  <div style="padding: 5px 10px 5px 0;">
     <v-card class="mx-auto" width="344" shaped>
       <!-- 标题栏 -->
       <v-card-title>
@@ -25,7 +25,7 @@
                 <v-icon size="20">{{ item.isFavorite === 1 ? 'favorite' : 'favorite_border'}}</v-icon>
               </v-btn>
               <v-btn icon>
-                <v-icon size="20">details</v-icon>
+                <v-icon size="20">info</v-icon>
               </v-btn>
             </v-row>
           </v-list-item-action>

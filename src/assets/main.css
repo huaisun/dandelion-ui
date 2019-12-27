@@ -28,18 +28,18 @@ body {
 .card {
     overflow-y: auto;
     /* max-height: 406px; */
-    transition-delay: 0.5s;
+    transition: max-height 0.5s;
     /* Firefox 4 */
-    -moz-transition-delay: 0.5s;
+    -moz-transition: max-height 0.5s;
     /* Safari and Chrome */
-    -webkit-transition-delay: 0.5s;
+    -webkit-transition: max-height 0.5s;
     /* Opera */
-    -o-transition-delay: 0.5s;
+    -o-transition: max-height 0.5s;
 }
 
 .out-card {
     float: left;
-    width: calc(100% - 360px);
+    width: 100%; /* calc(100% - 360px); */
     transition: width 0.5s;
     /* Firefox 4 */
     -moz-transition: width 0.5s;

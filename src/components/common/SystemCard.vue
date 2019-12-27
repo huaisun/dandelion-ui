@@ -14,7 +14,7 @@
             </v-btn>
             <span style="line-height: 36px; padding-right: 10px;">{{ item.loveTimes}}</span>
             <v-btn icon>
-              <v-icon>details</v-icon>
+              <v-icon>info</v-icon>
             </v-btn>
           </v-row>
         </v-list-item-action>

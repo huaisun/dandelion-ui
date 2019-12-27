@@ -13,7 +13,6 @@
         <v-btn v-else icon right fixed style="z-index: 456" @click="editLoveLinks">
           <v-icon>mdi-pencil</v-icon>
         </v-btn>
-
         <!-- 用户最喜爱的网站标题 -->
         <v-card fixed class="mx-auto" raised>
           <v-card-text>
@@ -26,8 +25,8 @@
     </div>
     <div
       class="mx-auto out-card"
-      :style="{ width: fullscreenFlag != 0 ? '100%' : 'calc(100% - 360px)'}"
     >
+      <!-- :style="{ width: fullscreenFlag != 0 ? '100%' : 'calc(100% - 360px)'}" -->
       <div v-if="fullscreenFlag == 0 || fullscreenFlag == 1" style="padding-bottom: 16px;">
         <User :fullscreenFlag="fullscreenFlag" @fullscreenChange="fullscreenChange"></User>
       </div>
@@ -35,7 +34,7 @@
         <Love :fullscreenFlag="fullscreenFlag" @fullscreenChange="fullscreenChange"></Love>
       </div>
     </div>
-    <div v-if="fullscreenFlag == 0" style="float: right;">
+    <div v-if="false" style="float: right;">
       <div style="padding-bottom: 16px;">
         <LinkRanks></LinkRanks>
       </div>
@@ -77,12 +76,6 @@ export default {
     ],
     iconPencial: "mdiPencil"
   }),
-  created() {
-    let id = localStorage.getItem("dandelion_id");
-    if (id === undefined || id === null) {
-      this.$router.push({ name: "login" });
-    }
-  },
   methods: {
     fullscreenChange(e) {
       this.fullscreenFlag = e;

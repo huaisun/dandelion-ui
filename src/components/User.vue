@@ -1,11 +1,19 @@
 <template>
   <!-- 用户自定义分类单 -->
   <v-card class="mx-auto">
-    <v-card-title>熊二</v-card-title>
+    <v-card-title>{{ user.userId }}
+      <v-btn v-if="user.userId" icon>
+        <v-icon>cached</v-icon>
+      </v-btn>
+      <div v-else>
+        <v-btn text>登录</v-btn>
+        <v-btn text>注册</v-btn>
+      </div>
+    </v-card-title>
     <v-card-text
       class="card"
       id="user-card"
-      :style="{ maxHeight: fullscreenFlag == 1 ? '100%' : '406px'}"
+      :style="{ maxHeight: fullscreenFlag == 1 ? categoryHeight : '406px'}"
     >
       <div id="user-category" style="display: flex;flex-flow:row wrap;">
         <!-- // 用户的网站 -->
@@ -40,6 +48,10 @@ export default {
   },
   props: ["fullscreenFlag"],
   data: () => ({
+    user: {
+      userId: localStorage.getItem("dandelion_id"),
+      userName: '',
+    },
     categorys: [
       {
         title: "搜索引擎分类",
@@ -257,8 +269,18 @@ export default {
           }
         ]
       }
-    ]
+    ],
+    categoryHeight: '422px',
   }),
+  mounted() {
+    let height = document.getElementById("user-category").offsetHeight;
+    if(height > 422) {
+      this.categoryHeight = height + 20 + 'px';
+    }
+
+    console.log(this.categoryHeight);
+    
+  },
   methods: {
     fullscreenClick() {
       this.$emit("fullscreenChange", 1);
