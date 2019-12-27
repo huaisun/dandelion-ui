@@ -78,6 +78,12 @@ export default {
     ],
     iconPencial: "mdiPencil"
   }),
+  created() {
+    let id = localStorage.getItem("dandleion_id")
+    if( id === undefined || id === null) {
+      this.$router.push({name: 'login'});
+    }
+  },
   methods: {
     fullscreenChange(e) {
       this.fullscreenFlag = e;
