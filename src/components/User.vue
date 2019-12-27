@@ -3,7 +3,8 @@
   <v-card class="mx-auto">
     <v-card-title>熊二</v-card-title>
     <v-card-text
-      style="overflow-y: auto;"
+      class="card"
+      id="user-card"
       :style="{ maxHeight: fullscreenFlag == 1 ? '100%' : '406px'}"
     >
       <div id="user-category" style="display: flex;flex-flow:row wrap;">

@@ -1,5 +1,5 @@
 <template>
-  <div class="home-body">
+  <div>
     <div style="height: 100px; background-color: white; width: 100%;">
       <div
         style="position: fixed; width: calc(100% - 40px); z-index: 456;"
@@ -25,9 +25,8 @@
       </div>
     </div>
     <div
-      style="float: left;"
+      class="mx-auto out-card"
       :style="{ width: fullscreenFlag != 0 ? '100%' : 'calc(100% - 360px)'}"
-      class="mx-auto"
     >
       <div v-if="fullscreenFlag == 0 || fullscreenFlag == 1" style="padding-bottom: 16px;">
         <User :fullscreenFlag="fullscreenFlag" @fullscreenChange="fullscreenChange"></User>
@@ -79,9 +78,9 @@ export default {
     iconPencial: "mdiPencil"
   }),
   created() {
-    let id = localStorage.getItem("dandleion_id")
-    if( id === undefined || id === null) {
-      this.$router.push({name: 'login'});
+    let id = localStorage.getItem("dandelion_id");
+    if (id === undefined || id === null) {
+      this.$router.push({ name: "login" });
     }
   },
   methods: {
@@ -111,10 +110,6 @@ export default {
 </script>
 
 <style scoped>
-.home-body {
-  padding: 20px;
-}
-
 .edit-main-link {
   height: 100%;
   background-color: #eee;

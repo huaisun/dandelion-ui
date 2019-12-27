@@ -3,10 +3,7 @@
   <v-card v-if="categorys != null && categorys.length !== 0" class="mx-auto">
     <v-card-title>收藏的分类</v-card-title>
 
-    <v-card-text
-      style="overflow-y: auto;"
-      :style="{ maxHeight: fullscreenFlag == 2 ? '100%' : '406px'}"
-    >
+    <v-card-text class="card" :style="{ maxHeight: fullscreenFlag == 2 ? '100%' : '406px'}">
       <div style="display: flex;flex-flow: row wrap;">
         <!-- // 用户的网站 -->
         <LchCard
@@ -17,7 +14,12 @@
           :subtitle="item.subtitle"
         ></LchCard>
       </div>
-      <v-btn v-if="fullscreenFlag == 2" icon style="position: absolute; right: 0; top: 0" @click="fullscreenExit">
+      <v-btn
+        v-if="fullscreenFlag == 2"
+        icon
+        style="position: absolute; right: 0; top: 0"
+        @click="fullscreenExit"
+      >
         <v-icon>fullscreen_exit</v-icon>
       </v-btn>
       <v-btn v-else icon style="position: absolute; right: 0; top: 0" @click="fullscreenClick">
