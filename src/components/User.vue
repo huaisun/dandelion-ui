@@ -6,8 +6,7 @@
         <v-icon>cached</v-icon>
       </v-btn>
       <div v-else>
-        <v-btn text>登录</v-btn>
-        <v-btn text>注册</v-btn>
+        <v-btn text @click="signIn">登录</v-btn>
       </div>
     </v-card-title>
     <v-card-text
@@ -287,7 +286,12 @@ export default {
     },
     fullscreenExit() {
       this.$emit("fullscreenChange", 0);
-    }
+    },
+    /**登录
+     */
+    signIn() {
+      this.$router.push({name: 'login'});
+    },
   }
 };
 </script>

@@ -25,6 +25,10 @@ body {
     padding: 20px;
 }
 
+html {
+    overflow: auto !important;
+}
+
 .card {
     overflow-y: auto;
     /* max-height: 406px; */
