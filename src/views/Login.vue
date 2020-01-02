@@ -136,7 +136,7 @@ export default {
             });
         } else {
           this.snackbar = true;
-          this.text = this.EMAIL_ERROR;overflow-y
+          this.text = this.EMAIL_ERROR;
           this.color = this.COLOR_ERROR;
         }
       }
