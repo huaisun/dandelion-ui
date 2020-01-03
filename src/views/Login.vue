@@ -112,8 +112,21 @@ export default {
           !this.isStringEmpty(this.password)
         ) {
           // 进行登录操作
-          console.log(this.email);
-          console.log(this.password);
+          this.$axios
+            .post("/lch/user/login", {
+              email: this.email,
+              password: this.password
+            })
+            .then(res => {
+              if (res.data.code === 0) {
+                localStorage.setItem("user", JSON.stringify(res.data.data));
+                this.$router.push({ name: "home" });
+              } else {
+                this.snackbar = true;
+                this.text = res.data.message;
+                this.color = this.COLOR_ERROR;
+              }
+            });
         } else {
           this.snackbar = true;
           this.text = this.CHECK_EMAIL_PASSWORD;
@@ -132,6 +145,7 @@ export default {
                 this.snackbar = true;
                 this.text = this.SIGN_UP_SUCCESS;
                 this.color = this.COLOR_SUCCESS;
+                this.loginFlag = true;
               }
             });
         } else {

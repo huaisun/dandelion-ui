@@ -1,9 +1,9 @@
 <template>
   <!-- 用户自定义分类单 -->
   <v-card class="mx-auto">
-    <v-card-title>{{ user.userId }}
-      <v-btn v-if="user.userId" icon>
-        <v-icon>cached</v-icon>
+    <v-card-title>{{ user.email }}
+      <v-btn v-if="user.id" icon>
+        <v-icon>remove_circle_outline</v-icon>
       </v-btn>
       <div v-else>
         <v-btn text @click="signIn">登录</v-btn>
@@ -47,10 +47,7 @@ export default {
   },
   props: ["fullscreenFlag"],
   data: () => ({
-    user: {
-      userId: localStorage.getItem("dandelion_id"),
-      userName: '',
-    },
+    user: JSON.parse(localStorage.getItem("user")),
     categorys: [
       {
         title: "搜索引擎分类",
