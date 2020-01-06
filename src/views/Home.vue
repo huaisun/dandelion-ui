@@ -9,7 +9,13 @@
       <v-card class="mx-auto" raised>
         <v-card-text>
           <v-chip-group multiple column active-class="primary--text">
-            <v-chip v-for="tag in tags" :close="editFlag" :key="tag">{{ tag }}</v-chip>
+            <v-chip
+              v-for="tag in links"
+              :close="editFlag"
+              :key="tag.id"
+              class="link-tag"
+              @click="linkClik(tag)"
+            >{{ tag.title }}</v-chip>
           </v-chip-group>
         </v-card-text>
       </v-card>
@@ -88,43 +94,53 @@ export default {
     editFlag: false, // 是否处于编辑状态
     fullscreenFlag: 0,
     time: 0,
-    tags: [],
+    links: [],
     iconPencial: "mdiPencil"
   }),
+  created() {
+    // 初始化加载用户收藏数据
+    this.loadLoveLink();
+  },
   methods: {
     fullscreenChange(e) {
       this.fullscreenFlag = e;
     },
-    /**
-     * 编辑主要链接
-     */
+    /**编辑主要链接 */
     editLoveLinks() {
       this.editFlag = true;
     },
-    /**
-     * 取消编辑
-     */
+    /**取消编辑 */
     cancelEdit() {
       this.editFlag = false;
     },
-    /**
-     * 完成编辑
-     */
+    /**完成编辑 */
     successEdit() {
       this.editFlag = false;
     },
-    /**
-     * 弹出表单框
-     */
+    /**弹出表单框 */
     addLove() {
       this.addLinkDialog = true;
     },
-    /**
-     * 关闭弹出框
-     */
-
+    /**关闭弹出框 */
     closeLinkDialog() {
       this.addLinkDialog = false;
+    },
+    /**用户收藏加载 */
+    loadLoveLink() {
+      let user = JSON.parse(localStorage.getItem("user"));
+      if (user != null && user != undefined) {
+        this.$axios
+          .get("/lch/link/getLoveLinkByUserId", {
+            params: { id: user.id }
+          })
+          .then(res => {
+            this.links = res.data.data;
+          });
+      }
+    },
+    /**跳转链接 */
+    linkClik(data) {
+      window.open(data.url);
     }
   }
 };
@@ -150,5 +166,12 @@ export default {
 
 .button-top-2 {
   top: 60px;
+}
+
+.link-tag {
+  max-width: 120px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 </style>
