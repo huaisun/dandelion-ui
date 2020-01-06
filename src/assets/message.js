@@ -5,4 +5,6 @@ export default function install(_Vue) {
     _Vue.prototype.EMAIL_ERROR = '邮箱格式不对或邮箱已存在，请更改';
 
     _Vue.prototype.SIGN_UP_SUCCESS = '注册成功';
+
+    _Vue.prototype.ADD_LOVE_ERROR = '收藏链接, 请先登录';
 }

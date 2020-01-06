@@ -1,31 +1,45 @@
 <template>
   <div>
     <div style="height: 100px; background-color: white; width: 100%;">
-      <div
-        style="position: fixed; width: calc(100% - 40px); z-index: 456;"
-        :style="{ height: editFlag ? '100%': 'auto'}"
-        :class="{ 'edit-main-link': editFlag }"
-      >
-        <div v-if="editFlag">
-          <v-btn fixed text style="right: 80px;z-index: 456" @click="cancelEdit">取消</v-btn>
-          <v-btn right fixed text style="z-index: 456" @click="successEdit">完成</v-btn>
-        </div>
-        <v-btn v-else icon right fixed style="z-index: 456" @click="editLoveLinks">
-          <v-icon>mdi-pencil</v-icon>
-        </v-btn>
-        <!-- 用户最喜爱的网站标题 -->
-        <v-card fixed class="mx-auto" raised>
-          <v-card-text>
-            <v-chip-group multiple column active-class="primary--text">
-              <v-chip v-for="tag in tags" :close="editFlag" :key="tag">{{ tag }}</v-chip>
-            </v-chip-group>
-          </v-card-text>
-        </v-card>
+      <!-- 添加 -->
+      <v-btn color="#0091EA" icon class="button-fixed button-right-1 button-top-1" @click="addLove">
+        <v-icon>add_circle_outline</v-icon>
+      </v-btn>
+      <!-- 用户最喜爱的网站标题 -->
+      <v-card class="mx-auto" raised>
+        <v-card-text>
+          <v-chip-group multiple column active-class="primary--text">
+            <v-chip v-for="tag in tags" :close="editFlag" :key="tag">{{ tag }}</v-chip>
+          </v-chip-group>
+        </v-card-text>
+      </v-card>
+      <div v-if="editFlag">
+        <v-btn
+          color="#FFD600"
+          text
+          class="button-fixed button-right-2 button-top-2"
+          @click="cancelEdit"
+        >取消</v-btn>
+        <v-btn
+          color="#64DD17"
+          text
+          class="button-fixed button-right-1 button-top-2"
+          @click="successEdit"
+        >完成</v-btn>
       </div>
+      <!-- 编辑 -->
+      <v-btn
+        v-else
+        color="#B71C1C"
+        icon
+        class="button-fixed button-right-1 button-top-2"
+        @click="editLoveLinks"
+      >
+        <v-icon>edit</v-icon>
+      </v-btn>
     </div>
-    <div
-      class="mx-auto out-card"
-    >
+
+    <div class="mx-auto out-card">
       <!-- :style="{ width: fullscreenFlag != 0 ? '100%' : 'calc(100% - 360px)'}" -->
       <div v-if="fullscreenFlag == 0 || fullscreenFlag == 1" style="padding-bottom: 16px;">
         <User :fullscreenFlag="fullscreenFlag" @fullscreenChange="fullscreenChange"></User>
@@ -34,6 +48,7 @@
         <Love :fullscreenFlag="fullscreenFlag" @fullscreenChange="fullscreenChange"></Love>
       </div>
     </div>
+
     <div v-if="false" style="float: right;">
       <div style="padding-bottom: 16px;">
         <LinkRanks></LinkRanks>
@@ -42,14 +57,20 @@
         <CategoryRanks></CategoryRanks>
       </div>
     </div>
+
+    <!-- 添加dialog -->
+    <v-dialog v-model="addLinkDialog" max-width="600" data-app="true">
+      <AddLink @closeDialog="closeLinkDialog"></AddLink>
+    </v-dialog>
   </div>
 </template>
 
 <script>
-import User from "@/components/User.vue";
-import Love from "@/components/Love.vue";
-import LinkRanks from "@/components/LinkRanks.vue";
+import User from "@/components/User";
+import Love from "@/components/Love";
+import LinkRanks from "@/components/LinkRanks";
 import CategoryRanks from "@/components/CategoryRanks";
+import AddLink from "@/components/dialog/AddLink";
 
 export default {
   name: "home",
@@ -57,23 +78,17 @@ export default {
     User,
     Love,
     LinkRanks,
-    CategoryRanks
+    CategoryRanks,
+    AddLink
   },
   data: () => ({
+    // 添加链接弹出框
+    addLinkDialog: false,
+
     editFlag: false, // 是否处于编辑状态
     fullscreenFlag: 0,
     time: 0,
-    tags: [
-      "Work",
-      "Home Improvement",
-      "Vacation",
-      "Food",
-      "Drawers",
-      "Shopping",
-      "Art",
-      "Tech",
-      "Creative Writing"
-    ],
+    tags: [],
     iconPencial: "mdiPencil"
   }),
   methods: {
@@ -97,15 +112,43 @@ export default {
      */
     successEdit() {
       this.editFlag = false;
+    },
+    /**
+     * 弹出表单框
+     */
+    addLove() {
+      this.addLinkDialog = true;
+    },
+    /**
+     * 关闭弹出框
+     */
+
+    closeLinkDialog() {
+      this.addLinkDialog = false;
     }
   }
 };
 </script>
 
 <style scoped>
-.edit-main-link {
-  height: 100%;
-  background-color: #eee;
-  opacity: 0.9;
+.button-fixed {
+  position: absolute;
+  z-index: 456;
+}
+
+.button-right-1 {
+  right: 15px;
+}
+
+.button-right-2 {
+  right: 80px;
+}
+
+.button-top-1 {
+  top: 15px;
+}
+
+.button-top-2 {
+  top: 60px;
 }
 </style>

@@ -1,8 +1,9 @@
 <template>
   <!-- 用户自定义分类单 -->
   <v-card class="mx-auto">
-    <v-card-title>{{ user.email }}
-      <v-btn v-if="user.id" icon>
+    <v-card-title>
+      {{ user == null || user === undefined ? '': user.email }}
+      <v-btn v-if="!(user == null || user=== undefined) && user.id" icon @click="signOut">
         <v-icon>remove_circle_outline</v-icon>
       </v-btn>
       <div v-else>
@@ -25,257 +26,53 @@
         ></LchCard>
       </div>
 
-      <v-btn v-if="fullscreenFlag == 1" icon style="position: absolute; right: 0; top: 0" @click="fullscreenExit">
+      <v-btn
+        v-if="fullscreenFlag == 1"
+        icon
+        style="position: absolute; right: 0; top: 0"
+        @click="fullscreenExit"
+      >
         <v-icon>fullscreen_exit</v-icon>
       </v-btn>
 
       <v-btn v-else icon style="position: absolute; right: 0; top: 0" @click="fullscreenClick">
         <v-icon>fullscreen</v-icon>
       </v-btn>
-      
     </v-card-text>
+    <v-dialog v-model="signOutDialog" max-width="300" data-app="true">
+      <SureDialog
+        :text="signOutText"
+        @sureDialog="sureSingOutDialog"
+        @closeDialog="closeSignOutDialog"
+      ></SureDialog>
+    </v-dialog>
   </v-card>
 </template>
 
 <script>
-import LchCard from "@/components/common/LchCard.vue";
+import LchCard from "@/components/common/LchCard";
+import SureDialog from "@/components/dialog/SureDialog";
 
 export default {
   name: "User",
   components: {
-    LchCard
+    LchCard,
+    SureDialog
   },
   props: ["fullscreenFlag"],
   data: () => ({
+    // 登出提示框
+    signOutDialog: false,
+    signOutText: "确定要退出登陆吗？",
     user: JSON.parse(localStorage.getItem("user")),
-    categorys: [
-      {
-        title: "搜索引擎分类",
-        subtitle: "搜索引擎分类",
-        links: [
-          {
-            name: "百度",
-            url: "http://www.basssssssssssssssssidu.com",
-            isFavorite: 1
-          },
-          {
-            name: "谷歌",
-            url: "http://www.google.com",
-            isFavorite: 1
-          },
-          {
-            name: "必应",
-            url: "http://www.bing.com",
-            isFavorite: 0
-          },
-          {
-            name: "必应",
-            url: "http://www.bing.com",
-            isFavorite: 1
-          },
-          {
-            name: "必应",
-            url: "http://www.bing.com",
-            isFavorite: 0
-          },
-          {
-            name: "必应",
-            url: "http://www.bing.com",
-            isFavorite: 0
-          }
-        ]
-      },
-      {
-        title: "搜索引擎分类",
-        subtitle: "搜索引擎分类",
-        links: [
-          {
-            name: "百度",
-            url: "http://www.basssssssssssssssssidu.com",
-            isFavorite: 1
-          },
-          {
-            name: "谷歌",
-            url: "http://www.google.com",
-            isFavorite: 1
-          },
-          {
-            name: "必应",
-            url: "http://www.bing.com",
-            isFavorite: 0
-          },
-          {
-            name: "必应",
-            url: "http://www.bing.com",
-            isFavorite: 1
-          },
-          {
-            name: "必应",
-            url: "http://www.bing.com",
-            isFavorite: 0
-          },
-          {
-            name: "必应",
-            url: "http://www.bing.com",
-            isFavorite: 0
-          }
-        ]
-      },
-      {
-        title: "搜索引擎分类",
-        subtitle: "搜索引擎分类",
-        links: [
-          {
-            name: "百度",
-            url: "http://www.basssssssssssssssssidu.com",
-            isFavorite: 1
-          },
-          {
-            name: "谷歌",
-            url: "http://www.google.com",
-            isFavorite: 1
-          },
-          {
-            name: "必应",
-            url: "http://www.bing.com",
-            isFavorite: 0
-          },
-          {
-            name: "必应",
-            url: "http://www.bing.com",
-            isFavorite: 1
-          },
-          {
-            name: "必应",
-            url: "http://www.bing.com",
-            isFavorite: 0
-          },
-          {
-            name: "必应",
-            url: "http://www.bing.com",
-            isFavorite: 0
-          }
-        ]
-      },
-      {
-        title: "搜索引擎分类",
-        subtitle: "搜索引擎分类",
-        links: [
-          {
-            name: "百度",
-            url: "http://www.basssssssssssssssssidu.com",
-            isFavorite: 1
-          },
-          {
-            name: "谷歌",
-            url: "http://www.google.com",
-            isFavorite: 1
-          },
-          {
-            name: "必应",
-            url: "http://www.bing.com",
-            isFavorite: 0
-          },
-          {
-            name: "必应",
-            url: "http://www.bing.com",
-            isFavorite: 1
-          },
-          {
-            name: "必应",
-            url: "http://www.bing.com",
-            isFavorite: 0
-          },
-          {
-            name: "必应",
-            url: "http://www.bing.com",
-            isFavorite: 0
-          }
-        ]
-      },
-      {
-        title: "搜索引擎分类",
-        subtitle: "搜索引擎分类",
-        links: [
-          {
-            name: "百度",
-            url: "http://www.basssssssssssssssssidu.com",
-            isFavorite: 1
-          },
-          {
-            name: "谷歌",
-            url: "http://www.google.com",
-            isFavorite: 1
-          },
-          {
-            name: "必应",
-            url: "http://www.bing.com",
-            isFavorite: 0
-          },
-          {
-            name: "必应",
-            url: "http://www.bing.com",
-            isFavorite: 1
-          },
-          {
-            name: "必应",
-            url: "http://www.bing.com",
-            isFavorite: 0
-          },
-          {
-            name: "必应",
-            url: "http://www.bing.com",
-            isFavorite: 0
-          }
-        ]
-      },
-      {
-        title: "搜索引擎分类",
-        subtitle: "搜索引擎分类",
-        links: [
-          {
-            name: "百度",
-            url: "http://www.basssssssssssssssssidu.com",
-            isFavorite: 1
-          },
-          {
-            name: "谷歌",
-            url: "http://www.google.com",
-            isFavorite: 1
-          },
-          {
-            name: "必应",
-            url: "http://www.bing.com",
-            isFavorite: 0
-          },
-          {
-            name: "必应",
-            url: "http://www.bing.com",
-            isFavorite: 1
-          },
-          {
-            name: "必应",
-            url: "http://www.bing.com",
-            isFavorite: 0
-          },
-          {
-            name: "必应",
-            url: "http://www.bing.com",
-            isFavorite: 0
-          }
-        ]
-      }
-    ],
-    categoryHeight: '422px',
+    categorys: [],
+    categoryHeight: "422px"
   }),
   mounted() {
     let height = document.getElementById("user-category").offsetHeight;
-    if(height > 422) {
-      this.categoryHeight = height + 20 + 'px';
+    if (height > 422) {
+      this.categoryHeight = height + 20 + "px";
     }
-
-    console.log(this.categoryHeight);
-    
   },
   methods: {
     fullscreenClick() {
@@ -284,11 +81,22 @@ export default {
     fullscreenExit() {
       this.$emit("fullscreenChange", 0);
     },
-    /**登录
-     */
+    /**登录 */
     signIn() {
-      this.$router.push({name: 'login'});
+      this.$router.push({ name: "login" });
     },
+    closeSignOutDialog() {
+      this.signOutDialog = false;
+    },
+    /**登出 */
+    signOut() {
+      this.signOutDialog = true;
+    },
+    sureSingOutDialog() {
+      localStorage.removeItem("user");
+      this.$router.push({ name: "login" });
+      this.signOutDialog = false;
+    }
   }
 };
 </script>

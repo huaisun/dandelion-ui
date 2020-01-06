@@ -43,7 +43,8 @@ html {
 
 .out-card {
     float: left;
-    width: 100%; /* calc(100% - 360px); */
+    width: 100%;
+    /* calc(100% - 360px); */
     transition: width 0.5s;
     /* Firefox 4 */
     -moz-transition: width 0.5s;
@@ -51,4 +52,8 @@ html {
     -webkit-transition: width 0.5s;
     /* Opera */
     -o-transition: width 0.5s;
+}
+
+.v-dialog__container {
+    display: inline;
 }
