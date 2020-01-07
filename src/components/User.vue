@@ -3,9 +3,14 @@
   <v-card class="mx-auto">
     <v-card-title>
       {{ user == null || user === undefined ? '': user.email }}
-      <v-btn v-if="!(user == null || user=== undefined) && user.id" icon @click="signOut">
-        <v-icon>remove_circle_outline</v-icon>
-      </v-btn>
+      <div v-if="!(user == null || user=== undefined) && user.id">
+        <v-btn icon @click="signOut">
+          <v-icon>remove_circle_outline</v-icon>
+        </v-btn>
+        <v-btn outlined small color="#FF6F00" @click="addCategory">
+          <v-icon>add</v-icon>添加分类
+        </v-btn>
+      </div>
       <div v-else>
         <v-btn text @click="signIn">登录</v-btn>
       </div>
@@ -17,13 +22,18 @@
     >
       <div id="user-category" style="display: flex;flex-flow:row wrap;">
         <!-- // 用户的网站 -->
-        <LchCard
-          v-for="(item, index) in categorys"
-          :key="index"
-          :links="item.links"
-          :title="item.title"
-          :subtitle="item.subtitle"
-        ></LchCard>
+        <div v-if="categorys != null && categorys.length > 0">
+          <LchCard
+            v-for="(item, index) in categorys"
+            :key="index"
+            :links="item.links"
+            :title="item.title"
+            :subtitle="item.subtitle"
+          ></LchCard>
+        </div>
+        <div v-else>
+          暂无分类
+        </div>
       </div>
 
       <v-btn
@@ -46,21 +56,28 @@
         @closeDialog="closeSignOutDialog"
       ></SureDialog>
     </v-dialog>
+    <v-dialog v-model="addCategoryDialog" max-width="300" data-app="true">
+      <AddCategory @closeDialog="closeCategoryDialog"></AddCategory>
+    </v-dialog>
   </v-card>
 </template>
 
 <script>
 import LchCard from "@/components/common/LchCard";
 import SureDialog from "@/components/dialog/SureDialog";
+import AddCategory from "@/components/dialog/AddCategory";
 
 export default {
   name: "User",
   components: {
     LchCard,
-    SureDialog
+    SureDialog,
+    AddCategory
   },
   props: ["fullscreenFlag"],
   data: () => ({
+    // 添加用户分类
+    addCategoryDialog: false,
     // 登出提示框
     signOutDialog: false,
     signOutText: "确定要退出登陆吗？",
@@ -92,10 +109,18 @@ export default {
     signOut() {
       this.signOutDialog = true;
     },
+    /**确认登出 */
     sureSingOutDialog() {
       localStorage.removeItem("user");
       this.$router.push({ name: "login" });
       this.signOutDialog = false;
+    },
+    /**添加分类 */
+    addCategory() {
+      this.addCategoryDialog = true;
+    },
+    closeCategoryDialog() {
+      this.addCategoryDialog = false;
     }
   }
 };

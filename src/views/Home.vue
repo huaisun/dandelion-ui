@@ -50,7 +50,7 @@
       <div v-if="fullscreenFlag == 0 || fullscreenFlag == 1" style="padding-bottom: 16px;">
         <User :fullscreenFlag="fullscreenFlag" @fullscreenChange="fullscreenChange"></User>
       </div>
-      <div v-if="fullscreenFlag == 0 || fullscreenFlag == 2" style="padding-bottom: 16px;">
+      <div v-if="false && (fullscreenFlag == 0 || fullscreenFlag == 2)" style="padding-bottom: 16px;">
         <Love :fullscreenFlag="fullscreenFlag" @fullscreenChange="fullscreenChange"></Love>
       </div>
     </div>
@@ -123,6 +123,7 @@ export default {
     },
     /**关闭弹出框 */
     closeLinkDialog() {
+      this.loadLoveLink();
       this.addLinkDialog = false;
     },
     /**用户收藏加载 */
