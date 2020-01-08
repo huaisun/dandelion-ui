@@ -14,20 +14,20 @@
           <!-- 数据展示栏 -->
           <v-list-item-content>
             <v-list-item-title class="button-list">
-              <span class="link-name">{{ item.name }}</span>
-              <span>({{ item.url }})</span>
+              <v-row justify>
+                <v-col cols="12" sm="6">{{ item.title }}</v-col>
+                <v-col cols="12" sm="6">{{ item.url }}</v-col>
+              </v-row>
             </v-list-item-title>
           </v-list-item-content>
           <!-- 图标操作栏 -->
           <v-list-item-action>
-            <v-row>
-              <v-btn icon>
+            <!-- <v-btn icon>
                 <v-icon size="20">{{ item.isFavorite === 1 ? 'favorite' : 'favorite_border'}}</v-icon>
-              </v-btn>
-              <v-btn icon>
-                <v-icon size="20">info</v-icon>
-              </v-btn>
-            </v-row>
+            </v-btn>-->
+            <v-btn icon>
+              <v-icon size="20">info</v-icon>
+            </v-btn>
           </v-list-item-action>
         </v-list-item>
       </v-list>
@@ -53,12 +53,18 @@ export default {
   text-decoration-color: #0000dd;
 }
 .category-list {
-    max-height: 300px;
-    overflow-x: auto;
+  max-height: 300px;
+  overflow-x: auto;
 }
 
 .category-details {
-    position: absolute;
-    right: 15px;
+  position: absolute;
+  right: 15px;
+}
+.link-name {
+  width: 100px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 </style>

@@ -27,13 +27,11 @@
             v-for="(item, index) in categorys"
             :key="index"
             :links="item.links"
-            :title="item.title"
-            :subtitle="item.subtitle"
+            :title="item.name"
+            :subtitle="item.detailName"
           ></LchCard>
         </div>
-        <div v-else>
-          暂无分类
-        </div>
+        <div v-else>暂无分类</div>
       </div>
 
       <v-btn
@@ -85,6 +83,9 @@ export default {
     categorys: [],
     categoryHeight: "422px"
   }),
+  created() {
+    this.loadCategory();
+  },
   mounted() {
     let height = document.getElementById("user-category").offsetHeight;
     if (height > 422) {
@@ -92,6 +93,20 @@ export default {
     }
   },
   methods: {
+    /**获取用户创建的分类 */
+    loadCategory() {
+      let user = JSON.parse(localStorage.getItem("user"));
+      if (user != null) {
+        this.$axios
+          .get("/lch/category/getCategoryByUserId", {
+            params: { userId: user.id }
+          })
+          .then(res => {
+            console.log(res);
+            this.categorys = res.data.data;
+          });
+      }
+    },
     fullscreenClick() {
       this.$emit("fullscreenChange", 1);
     },
