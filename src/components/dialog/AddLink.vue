@@ -37,8 +37,8 @@ export default {
     title: "",
     snackbar: false,
     timeout: 3000,
-    color: '',
-    text: '',
+    color: "",
+    text: ""
   }),
   methods: {
     /**关闭弹出框 */
@@ -56,12 +56,21 @@ export default {
         this.color = this.COLOR_WARNING;
         this.snackbar = true;
       } else {
-        this.$axios.post("/lch/link/addLoveLink", {
-          url: this.url,
-          title: this.title,
-          userId: user.id
-        });
-        this.closeDialog();
+        this.$axios
+          .post("/lch/link/addLoveLink", {
+            url: this.url,
+            title: this.title,
+            userId: user.id
+          })
+          .then(res => {
+            if (res.data.code === 0) {
+              this.closeDialog();
+            } else {
+              this.color = this.COLOR_ERROR;
+              this.text = res.data.message;
+              this.snackbar = true;
+            }
+          });
       }
     },
     /**获取title */
@@ -75,7 +84,7 @@ export default {
         });
     },
     signIn() {
-      this.$router.push({name: 'login'});
+      this.$router.push({ name: "login" });
     }
   }
 };

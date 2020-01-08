@@ -5,7 +5,7 @@
       <v-icon>add_circle_outline</v-icon>
     </v-btn>
     <!-- 用户最喜爱的网站标题 -->
-    <v-card class="mx-auto" raised>
+    <v-card class="mx-auto" raised min-height="80">
       <v-card-text>
         <v-chip-group multiple column active-class="primary--text">
           <v-chip
@@ -49,6 +49,11 @@
     <v-dialog v-model="addLinkDialog" max-width="600" data-app="true">
       <AddLink @closeDialog="closeLinkDialog"></AddLink>
     </v-dialog>
+    <!-- 消息提示 -->
+    <v-snackbar :color="color" :timeout="timeout" v-model="snackbar">
+      {{ text }}
+      <v-btn text @click="snackbar = false">关闭</v-btn>
+    </v-snackbar>
   </div>
 </template>
 <script>
@@ -65,7 +70,11 @@ export default {
     // 是否处于编辑状态
     editFlag: false,
     links: [],
-    removeLink: []
+    removeLink: [],
+    snackbar: false,
+    timeout: 3000,
+    color: "",
+    text: ""
   }),
   created() {
     // 初始化加载用户收藏数据
@@ -122,6 +131,10 @@ export default {
                 this.loadLoveLink();
                 this.editFlag = false;
                 this.removeLink = [];
+              } else {
+                this.color = this.COLOR_ERROR;
+                this.text = res.data.message;
+                this.snackbar = true;
               }
             });
         }
