@@ -15,7 +15,9 @@
               :key="tag.id"
               class="link-tag"
               @click="linkClik(tag)"
-            >{{ tag.title }}</v-chip>
+            >
+              <div class="link-name">{{ tag.title }}</div>
+            </v-chip>
           </v-chip-group>
         </v-card-text>
       </v-card>
@@ -23,13 +25,13 @@
         <v-btn
           color="#FFD600"
           text
-          class="button-fixed button-right-2 button-top-2"
+          class="button-fixed button-right-3 button-top-1"
           @click="cancelEdit"
         >取消</v-btn>
         <v-btn
           color="#64DD17"
           text
-          class="button-fixed button-right-1 button-top-2"
+          class="button-fixed button-right-2 button-top-1"
           @click="successEdit"
         >完成</v-btn>
       </div>
@@ -38,7 +40,7 @@
         v-else
         color="#B71C1C"
         icon
-        class="button-fixed button-right-1 button-top-2"
+        class="button-fixed button-right-2 button-top-1"
         @click="editLoveLinks"
       >
         <v-icon>edit</v-icon>
@@ -50,7 +52,10 @@
       <div v-if="fullscreenFlag == 0 || fullscreenFlag == 1" style="padding-bottom: 16px;">
         <User :fullscreenFlag="fullscreenFlag" @fullscreenChange="fullscreenChange"></User>
       </div>
-      <div v-if="false && (fullscreenFlag == 0 || fullscreenFlag == 2)" style="padding-bottom: 16px;">
+      <div
+        v-if="false && (fullscreenFlag == 0 || fullscreenFlag == 2)"
+        style="padding-bottom: 16px;"
+      >
         <Love :fullscreenFlag="fullscreenFlag" @fullscreenChange="fullscreenChange"></Love>
       </div>
     </div>
@@ -158,7 +163,11 @@ export default {
 }
 
 .button-right-2 {
-  right: 80px;
+  right: 60px;
+}
+
+.button-right-3 {
+  right: 120px;
 }
 
 .button-top-1 {
@@ -171,6 +180,12 @@ export default {
 
 .link-tag {
   max-width: 120px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.link-name {
+  width: 100px;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;

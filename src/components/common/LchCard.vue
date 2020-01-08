@@ -4,6 +4,9 @@
       <!-- 标题栏 -->
       <v-card-title>
         {{title}}
+        <v-btn class="category-add-link" icon>
+          <v-icon size="20">gps_fixed</v-icon>
+        </v-btn>
         <v-btn class="category-details" icon>
           <v-icon>bookmark</v-icon>
         </v-btn>
@@ -12,13 +15,9 @@
       <v-list class="transparent category-list">
         <v-list-item v-for="(item,index) in links" :key="index">
           <!-- 数据展示栏 -->
+          
           <v-list-item-content>
-            <v-list-item-title class="button-list">
-              <v-row justify>
-                <v-col cols="12" sm="6">{{ item.title }}</v-col>
-                <v-col cols="12" sm="6">{{ item.url }}</v-col>
-              </v-row>
-            </v-list-item-title>
+            <v-list-item-title class="button-list" @click="urlClick(item)">{{ item.title }}</v-list-item-title>
           </v-list-item-content>
           <!-- 图标操作栏 -->
           <v-list-item-action>
@@ -37,7 +36,12 @@
 <script>
 export default {
   name: "LchCard",
-  props: ["links", "title", "subtitle"]
+  props: ["links", "title", "subtitle"],
+  methods: {
+    urlClick(data) {
+      window.open(data.url);
+    }
+  }
 };
 </script>
 
@@ -61,10 +65,9 @@ export default {
   position: absolute;
   right: 15px;
 }
-.link-name {
-  width: 100px;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
+
+.category-add-link {
+  position: absolute;
+  right: 45px;
 }
 </style>

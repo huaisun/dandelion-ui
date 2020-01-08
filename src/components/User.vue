@@ -5,7 +5,7 @@
       {{ user == null || user === undefined ? '': user.email }}
       <div v-if="!(user == null || user=== undefined) && user.id">
         <v-btn icon @click="signOut">
-          <v-icon>remove_circle_outline</v-icon>
+          <v-icon>power_settings_new</v-icon>
         </v-btn>
         <v-btn outlined small color="#FF6F00" @click="addCategory">
           <v-icon>add</v-icon>添加分类
