@@ -146,6 +146,10 @@ export default {
                 this.text = this.SIGN_UP_SUCCESS;
                 this.color = this.COLOR_SUCCESS;
                 this.loginFlag = true;
+              } else {
+                this.snackbar = true;
+                this.text = this.EMAIL_ERROR;
+                this.color = this.COLOR_ERROR;
               }
             });
         } else {
