@@ -1,10 +1,14 @@
 <template>
   <div>
-    <Header></Header>
+    <Header ref="header_ref"></Header>
     <div class="mx-auto out-card">
       <!-- :style="{ width: fullscreenFlag != 0 ? '100%' : 'calc(100% - 360px)'}" -->
       <div v-if="fullscreenFlag == 0 || fullscreenFlag == 1" style="padding-bottom: 16px;">
-        <User :fullscreenFlag="fullscreenFlag" @fullscreenChange="fullscreenChange"></User>
+        <User
+          :fullscreenFlag="fullscreenFlag"
+          @fullscreenChange="fullscreenChange"
+          @refreshLoveLink="refreshLoveLink"
+        ></User>
       </div>
       <div
         v-if="false && (fullscreenFlag == 0 || fullscreenFlag == 2)"
@@ -44,9 +48,18 @@ export default {
   data: () => ({
     fullscreenFlag: 0
   }),
+  created() {
+    let user = JSON.parse(localStorage.getItem("user"));
+    if (user === null || user === undefined) {
+      this.$router.push({ name: 'login' });
+    }
+  },
   methods: {
     fullscreenChange(e) {
       this.fullscreenFlag = e;
+    },
+    refreshLoveLink() {
+      this.$refs.header_ref.loadLoveLink();
     }
   }
 };

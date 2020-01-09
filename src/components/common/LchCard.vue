@@ -21,11 +21,16 @@
           </v-list-item-content>
           <!-- 图标操作栏 -->
           <v-list-item-action>
-            <!-- <v-btn icon>
-                <v-icon size="20">{{ item.isFavorite === 1 ? 'favorite' : 'favorite_border'}}</v-icon>
-            </v-btn>-->
-            <v-btn icon>
-              <v-icon size="20">info</v-icon>
+            <v-btn icon @click="collectClick(item)">
+              <v-icon
+                :color="item.favorite ===1 ? '#EF9A9A': ''"
+                size="20"
+              >{{ item.favorite === 1 ? 'favorite' : 'favorite_border'}}</v-icon>
+            </v-btn>
+          </v-list-item-action>
+          <v-list-item-action>
+            <v-btn icon @click="deleteLink(item)">
+              <v-icon size="23">delete_outline</v-icon>
             </v-btn>
           </v-list-item-action>
         </v-list-item>
@@ -69,6 +74,53 @@ export default {
     closeLinkDialog() {
       this.$emit("loadCategory");
       this.addLinkDialog = false;
+    },
+    /**收藏链接 */
+    collectClick(data) {
+      let user = JSON.parse(localStorage.getItem("user"));
+      if (user != null) {
+        if (data.favorite === 1) {
+          this.$axios
+            .delete("/lch/link/deleteLinkByUserId", {
+              params: { ids: data.id, userId: user.id }
+            })
+            .then(res => {
+              if (res.data.code === 0) {
+                this.$emit("refresh");
+              } else {
+                this.color = this.COLOR_ERROR;
+                this.text = res.data.message;
+                this.snackbar = true;
+              }
+            });
+        } else {
+          this.$axios
+            .post("/lch/link/addLoveLink", {
+              linkId: data.id,
+              userId: user.id
+            })
+            .then(res => {
+              if (res.data.code === 0) {
+                this.$emit("refresh");
+              }
+            });
+        }
+      }
+    },
+    /**删除链接 */
+    deleteLink(data) {
+      this.$axios
+        .delete("/lch/category/deleteLink", {
+          params: {
+            categoryId: this.category.id,
+            linkId: data.id
+          }
+        })
+        .then(res => {
+          if (res.data.code === 0) {
+            this.$emit("refresh");
+          }
+        });
     }
   }
 };

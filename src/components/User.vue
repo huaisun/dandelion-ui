@@ -28,6 +28,7 @@
             :key="index"
             :category="item"
             @loadCategory="loadCategory"
+            @refresh="refresh"
           ></LchCard>
         </div>
         <div v-else>暂无分类</div>
@@ -134,6 +135,11 @@ export default {
     },
     closeCategoryDialog() {
       this.addCategoryDialog = false;
+    },
+    // 刷新链接
+    refresh() {
+      this.loadCategory();
+      this.$emit("refreshLoveLink");
     }
   }
 };
