@@ -26,9 +26,8 @@
           <LchCard
             v-for="(item, index) in categorys"
             :key="index"
-            :links="item.links"
-            :title="item.name"
-            :subtitle="item.detailName"
+            :category="item"
+            @loadCategory="loadCategory"
           ></LchCard>
         </div>
         <div v-else>暂无分类</div>
@@ -102,7 +101,6 @@ export default {
             params: { userId: user.id }
           })
           .then(res => {
-            console.log(res);
             this.categorys = res.data.data;
           });
       }

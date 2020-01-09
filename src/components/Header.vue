@@ -16,7 +16,7 @@
             @click:close="closeClick(tag)"
             @click="linkClik(tag)"
           >
-            <div class="link-name">{{ tag.title }}</div>
+            <div class="link-name">{{ tag.name }}</div>
           </v-chip>
         </v-chip-group>
       </v-card-text>
@@ -47,7 +47,7 @@
     </v-btn>
     <!-- 添加dialog -->
     <v-dialog v-model="addLinkDialog" max-width="600" data-app="true">
-      <AddLink @closeDialog="closeLinkDialog"></AddLink>
+      <AddLink title="宝藏" subtitle="收藏到你的最爱" flag="love" @closeDialog="closeLinkDialog"></AddLink>
     </v-dialog>
     <!-- 消息提示 -->
     <v-snackbar :color="color" :timeout="timeout" v-model="snackbar">

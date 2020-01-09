@@ -1,7 +1,7 @@
 <template>
   <v-card>
     <v-card-title>
-      <span class="headline">宝藏</span>
+      <span class="headline">{{ title }}</span>
     </v-card-title>
     <v-card-text>
       <v-container>
@@ -10,11 +10,11 @@
             <v-text-field v-model="url" label="链接*" required @change="urlChange"></v-text-field>
           </v-col>
           <v-col cols="12">
-            <v-text-field v-model="title" label="标题*" required></v-text-field>
+            <v-text-field v-model="name" label="名称*" required></v-text-field>
           </v-col>
         </v-row>
       </v-container>
-      <small>*收藏你的宝藏</small>
+      <small>*{{ subtitle }}</small>
     </v-card-text>
     <v-card-actions>
       <v-spacer></v-spacer>
@@ -24,7 +24,7 @@
     <!-- 消息提示 -->
     <v-snackbar :color="color" :timeout="timeout" v-model="snackbar">
       {{ text }}
-      <v-btn text @click="signIn">登录</v-btn>
+      <v-btn text @click="snackbar = false">关闭</v-btn>
     </v-snackbar>
   </v-card>
 </template>
@@ -32,9 +32,10 @@
 <script>
 export default {
   name: "AddLink",
+  props: ["title", "subtitle", "flag", "data"],
   data: () => ({
     url: "",
-    title: "",
+    name: "",
     snackbar: false,
     timeout: 3000,
     color: "",
@@ -45,7 +46,7 @@ export default {
     closeDialog() {
       this.$emit("closeDialog");
       this.url = "";
-      this.title = "";
+      this.name = "";
     },
     /**保存 */
     saveUrl() {
@@ -56,21 +57,25 @@ export default {
         this.color = this.COLOR_WARNING;
         this.snackbar = true;
       } else {
-        this.$axios
-          .post("/lch/link/addLoveLink", {
-            url: this.url,
-            title: this.title,
-            userId: user.id
-          })
-          .then(res => {
-            if (res.data.code === 0) {
-              this.closeDialog();
-            } else {
-              this.color = this.COLOR_ERROR;
-              this.text = res.data.message;
-              this.snackbar = true;
-            }
-          });
+        let url = "/lch/link/addLoveLink";
+        let vo = {
+          url: this.url,
+          name: this.name,
+          userId: user.id
+        };
+        if (this.flag === "category") {
+          url = "/lch/category/addCategoryLink";
+          vo.categoryId = this.data.id;
+        }
+        this.$axios.post(url, vo).then(res => {
+          if (res.data.code === 0) {
+            this.closeDialog();
+          } else {
+            this.color = this.COLOR_ERROR;
+            this.text = res.data.message;
+            this.snackbar = true;
+          }
+        });
       }
     },
     /**获取title */
@@ -79,12 +84,9 @@ export default {
         .get("/lch/link/getTitleByUrl", { params: { url: this.url } })
         .then(res => {
           if (res.data.code === 0) {
-            this.title = res.data.data;
+            this.name = res.data.data;
           }
         });
-    },
-    signIn() {
-      this.$router.push({ name: "login" });
     }
   }
 };
