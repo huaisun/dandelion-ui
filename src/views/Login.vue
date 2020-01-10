@@ -148,7 +148,7 @@ export default {
                 this.loginFlag = true;
               } else {
                 this.snackbar = true;
-                this.text = this.EMAIL_ERROR;
+                this.text = res.data.message;
                 this.color = this.COLOR_ERROR;
               }
             });
