@@ -55,7 +55,7 @@
         <!-- 消息提示 -->
         <v-snackbar :color="color" :timeout="timeout" v-model="snackbar">
           {{ text }}
-          <v-btn text @click="snackbar = false">Close</v-btn>
+          <v-btn text @click="snackbar = false">关闭</v-btn>
         </v-snackbar>
       </div>
     </div>
@@ -142,10 +142,11 @@ export default {
             })
             .then(res => {
               if (res.data.code === 0) {
-                this.snackbar = true;
                 this.text = this.SIGN_UP_SUCCESS;
                 this.color = this.COLOR_SUCCESS;
+                this.timeout = 0;
                 this.loginFlag = true;
+                this.snackbar = true;
               } else {
                 this.snackbar = true;
                 this.text = res.data.message;
