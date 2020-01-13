@@ -22,16 +22,13 @@
     >
       <div id="user-category" style="display: flex;flex-flow:row wrap;">
         <!-- // 用户的网站 -->
-        <div v-if="categorys != null && categorys.length > 0">
-          <LchCard
-            v-for="(item, index) in categorys"
-            :key="index"
-            :category="item"
-            @loadCategory="loadCategory"
-            @refresh="refresh"
-          ></LchCard>
-        </div>
-        <div v-else>暂无分类</div>
+        <LchCard
+          v-for="(item, index) in categorys"
+          :key="index"
+          :category="item"
+          @loadCategory="loadCategory"
+          @refresh="refresh"
+        ></LchCard>
       </div>
 
       <v-btn
