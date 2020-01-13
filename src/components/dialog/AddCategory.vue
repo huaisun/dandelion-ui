@@ -55,7 +55,7 @@ export default {
           })
           .then(res => {
             if (res.data.code === 0) {
-              this.closeDialog();
+              this.$emit("refresh");
             } else {
               this.color = this.COLOR_ERROR;
               this.text = res.data.message;

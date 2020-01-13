@@ -52,7 +52,7 @@
       ></SureDialog>
     </v-dialog>
     <v-dialog v-model="addCategoryDialog" max-width="300" data-app="true">
-      <AddCategory @closeDialog="closeCategoryDialog"></AddCategory>
+      <AddCategory @closeDialog="closeCategoryDialog" @refresh="refreshCategory"></AddCategory>
     </v-dialog>
   </v-card>
 </template>
@@ -137,6 +137,11 @@ export default {
     refresh() {
       this.loadCategory();
       this.$emit("refreshLoveLink");
+    },
+    // 刷新分类
+    refreshCategory() {
+      this.loadCategory();
+      this.closeCategoryDialog();
     }
   }
 };
