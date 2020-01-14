@@ -16,9 +16,9 @@
             @click:close="closeClick(tag)"
             @click="linkClik(tag)"
           >
-            <v-avatar left>
+            <div left class="avator-ico">
               <img :src="'data:image/png;base64,' + tag.ico" />
-            </v-avatar>
+            </div>
             <div class="link-name">{{ tag.name }}</div>
           </v-chip>
         </v-chip-group>

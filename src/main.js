@@ -5,7 +5,7 @@ import vuetify from './plugins/vuetify';
 import axios from 'axios'
 
 // index.js or main.js
-import 'vuetify/dist/vuetify.min.css' // Ensure you are using css-loader
+// import 'vuetify/dist/vuetify.min.css' // Ensure you are using css-loader
 import '@/assets/main.css'
 import CommonJs from '@/assets/common.js'
 import MessageJs from '@/assets/message.js'

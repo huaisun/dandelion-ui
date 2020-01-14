@@ -155,9 +155,8 @@ export default {
     updateIcon() {
       let user = JSON.parse(localStorage.getItem("user"));
       this.overlay = true;
-      this.$axios.post("/lch/user/updateIcon", user).then(res => {
+      this.$axios.post("/lch/user/updateIcon", user).then(() => {
         this.overlay = false;
-        console.log(res);
       });
     }
   }
