@@ -15,12 +15,15 @@
       <v-list class="transparent category-list">
         <v-list-item v-for="(item,index) in category.links" :key="index">
           <!-- 数据展示栏 -->
+          <v-list-item-avatar width="16px" height="16px" min-width="28px" min-height="16px">
+            <img class="url-icon" :src="'data:image/png;base64,' + item.ico" />
+          </v-list-item-avatar>
 
           <v-list-item-content>
             <v-list-item-title class="button-list" @click="urlClick(item)">{{ item.name }}</v-list-item-title>
           </v-list-item-content>
           <!-- 图标操作栏 -->
-          <v-list-item-action>
+          <v-list-item-action class="link-action">
             <v-btn icon @click="collectClick(item)">
               <v-icon
                 :color="item.favorite ===1 ? '#EF9A9A': ''"
@@ -28,7 +31,7 @@
               >{{ item.favorite === 1 ? 'favorite' : 'favorite_border'}}</v-icon>
             </v-btn>
           </v-list-item-action>
-          <v-list-item-action>
+          <v-list-item-action class="link-action">
             <v-btn icon @click="deleteLink(item)">
               <v-icon size="23">delete_outline</v-icon>
             </v-btn>
@@ -150,5 +153,13 @@ export default {
 .category-add-link {
   position: absolute;
   right: 45px;
+}
+
+.url-icon {
+  height: 16px;
+}
+
+.link-action {
+  margin: 0;
 }
 </style>

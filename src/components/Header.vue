@@ -16,6 +16,9 @@
             @click:close="closeClick(tag)"
             @click="linkClik(tag)"
           >
+            <v-avatar left>
+              <img :src="'data:image/png;base64,' + tag.ico" />
+            </v-avatar>
             <div class="link-name">{{ tag.name }}</div>
           </v-chip>
         </v-chip-group>
@@ -179,13 +182,13 @@ export default {
 }
 
 .link-tag {
-  max-width: 120px;
+  max-width: 130px;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
 }
 .link-name {
-  max-width: 100px;
+  max-width: 130px;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;

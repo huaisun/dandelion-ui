@@ -7,6 +7,9 @@
         <v-btn icon @click="signOut">
           <v-icon>power_settings_new</v-icon>
         </v-btn>
+        <v-btn icon color="#000000">
+          <v-icon @click="updateIcon">update</v-icon>
+        </v-btn>
         <v-btn outlined small color="#FF6F00" @click="addCategory">
           <v-icon>add</v-icon>添加分类
         </v-btn>
@@ -54,6 +57,9 @@
     <v-dialog v-model="addCategoryDialog" max-width="300" data-app="true">
       <AddCategory @closeDialog="closeCategoryDialog" @refresh="refreshCategory"></AddCategory>
     </v-dialog>
+    <v-overlay :value="overlay">
+      <v-progress-circular indeterminate color="#4CAF50"></v-progress-circular>
+    </v-overlay>
   </v-card>
 </template>
 
@@ -71,6 +77,8 @@ export default {
   },
   props: ["fullscreenFlag"],
   data: () => ({
+    // 遮罩层
+    overlay: false,
     // 添加用户分类
     addCategoryDialog: false,
     // 登出提示框
@@ -142,6 +150,15 @@ export default {
     refreshCategory() {
       this.loadCategory();
       this.closeCategoryDialog();
+    },
+    // 更新链接的icon
+    updateIcon() {
+      let user = JSON.parse(localStorage.getItem("user"));
+      this.overlay = true;
+      this.$axios.post("/lch/user/updateIcon", user).then(res => {
+        this.overlay = false;
+        console.log(res);
+      });
     }
   }
 };
