@@ -6,10 +6,10 @@ import axios from 'axios'
 
 // index.js or main.js
 // import 'vuetify/dist/vuetify.min.css' // Ensure you are using css-loader
-import '@/assets/main.css'
-import CommonJs from '@/assets/common.js'
-import MessageJs from '@/assets/message.js'
-import ColorJs from '@/assets/color.js'
+import '@/assets/css/main.css'
+import CommonJs from '@/utils/common.js'
+import MessageJs from '@/constants/message.js'
+import ColorJs from '@/constants/color.js'
 
 Vue.prototype.$axios = axios    //全局注册，使用方法为:this.$axios
 Vue.config.productionTip = false

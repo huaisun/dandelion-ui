@@ -1,13 +1,9 @@
 <template>
   <div style="height: 100px; background-color: white; width: 100%;">
-    <!-- 添加 -->
-    <v-btn color="#0091EA" icon class="button-fixed button-right-1 button-top-1" @click="addLove">
-      <v-icon>add_circle_outline</v-icon>
-    </v-btn>
     <!-- 用户最喜爱的网站标题 -->
-    <v-card class="mx-auto" raised min-height="80">
+    <v-card class="mx-auto" raised min-height="120">
       <v-card-text>
-        <v-chip-group multiple column active-class="primary--text">
+        <v-chip-group multiple column active-class="primary--text" class="chip-links">
           <v-chip
             v-for="tag in links"
             :close="editFlag"
@@ -21,29 +17,35 @@
             </div>
             <div class="link-name">{{ tag.name }}</div>
           </v-chip>
+          <v-chip color="primary" outlined @click="addLove">
+            <v-avatar left>
+              <v-icon>add</v-icon>
+            </v-avatar>
+            <div class="link-name">添加链接</div>
+          </v-chip>
         </v-chip-group>
       </v-card-text>
     </v-card>
     <div v-if="editFlag">
       <v-btn
-        color="#FFD600"
+        color="warning"
         text
-        class="button-fixed button-right-3 button-top-1"
+        class="button-fixed button-right-2 button-top"
         @click="cancelEdit"
       >取消</v-btn>
       <v-btn
-        color="#64DD17"
+        color="success"
         text
-        class="button-fixed button-right-2 button-top-1"
+        class="button-fixed button-right-1 button-top"
         @click="successEdit"
       >完成</v-btn>
     </div>
     <!-- 编辑 -->
     <v-btn
       v-else
-      color="#B71C1C"
+      color="primary"
       icon
-      class="button-fixed button-right-2 button-top-1"
+      class="button-fixed button-right-1 button-top"
       @click="editFlag = true"
     >
       <v-icon>edit</v-icon>
@@ -60,6 +62,10 @@
   </div>
 </template>
 <script>
+import {
+  getLoveLinkByUserId,
+  deleteLinkByUserId
+} from "@/api/home/home.api.js";
 import AddLink from "@/components/dialog/AddLink";
 
 export default {
@@ -94,13 +100,10 @@ export default {
     loadLoveLink() {
       let user = JSON.parse(localStorage.getItem("user"));
       if (user != null && user != undefined) {
-        this.$axios
-          .get("/lch/link/getLoveLinkByUserId", {
-            params: { id: user.id }
-          })
-          .then(res => {
-            this.links = res.data.data;
-          });
+        getLoveLinkByUserId({ id: user.id }).then(res => {
+          console.log(res);
+          this.links = res.data.data;
+        });
       }
     },
     /**跳转链接 */
@@ -125,21 +128,17 @@ export default {
         });
         let user = JSON.parse(localStorage.getItem("user"));
         if (user != null && user !== undefined) {
-          this.$axios
-            .delete("/lch/link/deleteLinkByUserId", {
-              params: { ids: ids, userId: user.id }
-            })
-            .then(res => {
-              if (res.data.code === 0) {
-                this.loadLoveLink();
-                this.editFlag = false;
-                this.removeLink = [];
-              } else {
-                this.color = this.COLOR_ERROR;
-                this.text = res.data.message;
-                this.snackbar = true;
-              }
-            });
+          deleteLinkByUserId({ ids: ids, userId: user.id }).then(res => {
+            if (res.data.code === 0) {
+              this.loadLoveLink();
+              this.editFlag = false;
+              this.removeLink = [];
+            } else {
+              this.color = this.COLOR_ERROR;
+              this.text = res.data.message;
+              this.snackbar = true;
+            }
+          });
         }
       } else {
         this.editFlag = false;
@@ -162,19 +161,11 @@ export default {
 }
 
 .button-right-1 {
-  right: 15px;
+  left: 15px;
 }
 
 .button-right-2 {
-  right: 60px;
-}
-
-.button-right-3 {
-  right: 120px;
-}
-
-.button-top-1 {
-  top: 15px;
+  left: 60px;
 }
 
 .button-top-2 {
@@ -192,5 +183,9 @@ export default {
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
+}
+
+.chip-links {
+  padding-right: 80px;
 }
 </style>

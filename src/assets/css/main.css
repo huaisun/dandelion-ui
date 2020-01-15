@@ -18,17 +18,6 @@
     background: #ededed;
     border-radius: 10px;
 }
-
-body {
-    background: white;
-    margin: 0;
-    padding: 20px;
-}
-
-html {
-    overflow: auto !important;
-}
-
 .card {
     overflow-y: auto;
     /* max-height: 406px; */
