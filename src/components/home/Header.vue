@@ -101,7 +101,6 @@ export default {
       let user = JSON.parse(localStorage.getItem("user"));
       if (user != null && user != undefined) {
         getLoveLinkByUserId({ id: user.id }).then(res => {
-          console.log(res);
           this.links = res.data.data;
         });
       }
