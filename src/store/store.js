@@ -8,9 +8,8 @@ Vue.use(Vuex);
 //创建且声明一个对象
 export const store = new Vuex.Store({
     state: {
-        sign: {
-            signupBtn: '',
-            loginBtn: '',
+        regex: {
+            domain: /^[A-Za-z]{3, 12}$/
         }
     }
 })

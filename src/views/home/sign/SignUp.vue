@@ -4,23 +4,42 @@
       <span>或</span>加入 我们
     </h2>
     <div class="form-holder">
-      <input type="text" class="input" placeholder="账户名" />
-      <input type="email" class="input" placeholder="邮箱" />
-      <input type="password" class="input" placeholder="密码" />
+      <input
+        type="text"
+        v-model="form.domain"
+        class="input"
+        :class="{'error-input': rules.domain}"
+        placeholder="账户名(3-12位英文)"
+        @blur="checkDomain"
+      />
+      <input type="email" v-model="form.email" class="input" placeholder="邮箱" />
+      <input type="password" v-model="form.password" class="input" placeholder="密码" />
     </div>
     <button class="submit-btn">一键 注册</button>
   </div>
 </template>
 <script>
+import { checkUser } from "@/api/home/sign.api.js";
+
 export default {
   name: "SignIn",
   data: () => ({
-    loginBtn: document.getElementById("login")
+    loginBtn: document.getElementById("login"),
+    form: {
+      domain: "",
+      email: "",
+      password: ""
+    },
+    rules: {
+      domain: false,
+      email: false
+    }
   }),
   mounted() {
     this.loginBtn = document.getElementById("login");
   },
   methods: {
+    /**响应注册点击 */
     signUp(e) {
       let parent = e.target.parentNode;
       Array.from(e.target.parentNode.classList).find(element => {
@@ -31,6 +50,21 @@ export default {
           parent.classList.remove("slide-up");
         }
       });
+    },
+
+    checkDomain() {
+      let regex = this.$store.state.regex.domain;
+      if (this.form.domain != "" && this.form.domain.match(regex)) {
+        checkUser({ domain: this.form.domain }).then(res => {
+          if (res.data.code === 400) {
+            this.rules.domain = false;
+          } else {
+            this.rules.domain = true;
+          }
+        });
+      } else if (this.form.domain != "") {
+        this.rules.domain = true;
+      }
     }
   }
 };
@@ -109,6 +143,9 @@ export default {
       &::-webkit-input-placeholder {
         color: rgba(0, 0, 0, 0.4);
       }
+    }
+    .error-input {
+      border-color: red;
     }
   }
 
