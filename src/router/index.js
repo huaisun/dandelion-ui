@@ -1,19 +1,16 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
-import Home from '../views/home/Home'
-import Login from '../views/Login'
 import Active from '../views/Active'
+
+// 主页
+import Home from '../views/home/Home'
 
 Vue.use(VueRouter)
 
 const routes = [{
     path: '/',
-    name: 'home',
-    component: Home
-}, {
-    path: '/login',
-    name: 'login',
-    component: Login
+    name: 'Home',
+    component: Home,
 }, {
     path: '/active',
     name: 'active',
