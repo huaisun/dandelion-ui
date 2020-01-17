@@ -51,10 +51,11 @@ export default {
         }
       });
     },
-
+    /**检查用户名是否重复 */
     checkDomain() {
       let regex = this.$store.state.regex.domain;
-      if (this.form.domain != "" && this.form.domain.match(regex)) {
+      console.log(regex.test(this.form.domain))
+      if (this.form.domain != "" && regex.test(this.form.domain)) {
         checkUser({ domain: this.form.domain }).then(res => {
           if (res.data.code === 400) {
             this.rules.domain = false;
