@@ -12,7 +12,9 @@ import '@/assets/css/main.css'
 import CommonJs from '@/utils/common.js'
 import MessageJs from '@/constants/message.js'
 import ColorJs from '@/constants/color.js'
-
+import Snackbar from '@/components/common/snackbar/snackbar.js'
+ 
+Vue.prototype.$snackbar = Snackbar;
 Vue.prototype.$axios = axios //全局注册，使用方法为:this.$axios
 Vue.config.productionTip = false
 Vue.use(Vuex);

@@ -12,14 +12,21 @@
         placeholder="账户名(3-12位英文)"
         @blur="checkDomain"
       />
-      <input type="email" v-model="form.email" class="input" placeholder="邮箱" />
+      <input
+        type="email"
+        v-model="form.email"
+        class="input"
+        :class="{'error-input': rules.email}"
+        placeholder="邮箱"
+        @blur="checkEmail"
+      />
       <input type="password" v-model="form.password" class="input" placeholder="密码" />
     </div>
-    <button class="submit-btn">一键 注册</button>
+    <button class="submit-btn" @click="submit">一键 注册</button>
   </div>
 </template>
 <script>
-import { checkUser } from "@/api/home/sign.api.js";
+import { getDomain, getEmail, addUser } from "@/api/home/sign.api.js";
 
 export default {
   name: "SignIn",
@@ -33,6 +40,10 @@ export default {
     rules: {
       domain: false,
       email: false
+    },
+    message: {
+      domain: "",
+      email: ""
     }
   }),
   mounted() {
@@ -51,20 +62,60 @@ export default {
         }
       });
     },
-    /**检查用户名是否重复 */
+    /**检查用户名是否重复以及格式 */
     checkDomain() {
       let regex = this.$store.state.regex.domain;
-      console.log(regex.test(this.form.domain))
-      if (this.form.domain != "" && regex.test(this.form.domain)) {
-        checkUser({ domain: this.form.domain }).then(res => {
+      if (this.form.domain.trim === "") {
+        this.rules.domain = true;
+      } else if (regex.test(this.form.domain)) {
+        getDomain({ domain: this.form.domain }).then(res => {
           if (res.data.code === 400) {
             this.rules.domain = false;
           } else {
             this.rules.domain = true;
+            this.message.domain = res.data.message;
           }
         });
-      } else if (this.form.domain != "") {
-        this.rules.domain = true;
+      }
+    },
+    /**检查邮箱是否重复以及格式 */
+    checkEmail() {
+      let regex = this.$store.state.regex.email;
+      if (this.form.email === "") {
+        this.rules.email = true;
+      } else if (regex.test(this.form.email)) {
+        getEmail({ email: this.form.email }).then(res => {
+          if (res.data.code === 100) {
+            this.rules.email = false;
+          } else {
+            this.rules.email = true;
+            this.message.email = res.data.message;
+          }
+        });
+      }
+    },
+    /**提交注册 */
+    submit() {
+      if (this.isStringEmpty(this.form.domain)) {
+        this.$snackbar.error("用户名不可为空");
+      } else if (this.isStringEmpty(this.form.email)) {
+        this.$snackbar.error("邮箱不可为空");
+      } else if (this.isStringEmpty(this.form.password)) {
+        this.$snackbar.error("密码不可为空");
+      } else {
+        if (!this.rules.domain && !this.rules.email) {
+          // 进行注册业务
+          addUser({
+            email: this.email,
+            password: this.password
+          }).then(res => {
+            console.log(res);
+          });
+        } else if (this.rules.domain) {
+          this.$snackbar.error(this.rules.message);
+        } else {
+          this.$snackbar.error(this.rules.message);
+        }
       }
     }
   }
