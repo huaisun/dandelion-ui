@@ -7,4 +7,10 @@ export default function install(_Vue) {
     _Vue.prototype.SIGN_UP_SUCCESS = '注册成功, 请登录邮箱激活！若收件箱中无激活邮件，可能拦截到垃圾邮件中，请前往查看';
 
     _Vue.prototype.ADD_LOVE_ERROR = '收藏链接, 请先登录';
+
+    _Vue.prototype.NO_EMPTY_EMAIL = "邮箱不可为空";
+    _Vue.prototype.NO_EMPTY_DOMAIN = "域名不可为空";
+    _Vue.prototype.NO_EMPTY_PASSWORD = "密码不可为空";
+    _Vue.prototype.NO_EMPTY_NAME = "用户名不可为空";
+
 }

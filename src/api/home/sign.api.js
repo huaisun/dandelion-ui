@@ -8,3 +8,6 @@ export const getEmail = params => { return axios.get("/lch/user/checkEmail", { p
 
 // 注册用户
 export const addUser = params => { return axios.post("/lch/user/addUser", { params }) }
+
+// 登录
+export const login = params => { return axios.post("/lch/user/login", params) }

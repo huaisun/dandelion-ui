@@ -5,18 +5,24 @@
         <span>或</span>登 录
       </h2>
       <div class="form-holder">
-        <input type="text" class="input" placeholder="用户名/邮箱" />
-        <input type="password" class="input" placeholder="密码" />
+        <input type="text" class="input" v-model="form.domain" placeholder="用户名/邮箱" />
+        <input type="password" class="input" v-model="form.password" placeholder="密码" />
       </div>
-      <button class="submit-btn">登 入</button>
+      <button class="submit-btn" @click="submit">登 入</button>
     </div>
   </div>
 </template>
 <script>
+import { login } from "@/api/home/sign.api.js";
+
 export default {
   name: "SignUp",
   data: () => ({
-    signupBtn: document.getElementById("signup")
+    signupBtn: document.getElementById("signup"),
+    form: {
+      domain: "",
+      password: ""
+    }
   }),
   mounted() {
     this.signupBtn = document.getElementById("signup");
@@ -32,6 +38,24 @@ export default {
           parent.classList.remove("slide-up");
         }
       });
+    },
+    /**登录操作 */
+    submit() {
+      if (this.isStringEmpty(this.form.domain)) {
+        this.$snackbar.error(this.NO_EMPTY_NAME);
+      } else if (this.isStringEmpty(this.form.password)) {
+        this.$snackbar.error(this.NO_EMPTY_PASSWORD);
+      } else {
+        login(this.form).then(res => {
+          console.log(res);
+          if (res.data.code === 0) {
+            localStorage.setItem("user", JSON.stringify(res.data.data));
+            this.$router.push({ name: "home" });
+          } else {
+            this.$snackbar.error(res.data.message);
+          }
+        });
+      }
     }
   }
 };

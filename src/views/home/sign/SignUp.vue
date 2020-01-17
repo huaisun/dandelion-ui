@@ -85,6 +85,7 @@ export default {
         this.rules.email = true;
       } else if (regex.test(this.form.email)) {
         getEmail({ email: this.form.email }).then(res => {
+          console.log(res);
           if (res.data.code === 100) {
             this.rules.email = false;
           } else {
@@ -105,16 +106,17 @@ export default {
       } else {
         if (!this.rules.domain && !this.rules.email) {
           // 进行注册业务
-          addUser({
-            email: this.email,
-            password: this.password
-          }).then(res => {
-            console.log(res);
+          addUser(this.form).then(res => {
+            if (res.data.code === 0) {
+              this.$snackbar.success(this.SIGN_UP_SUCCESS);
+            } else {
+              this.$snackbar.error(res.data.message);
+            }
           });
         } else if (this.rules.domain) {
-          this.$snackbar.error(this.rules.message);
+          this.$snackbar.error(this.message.domain);
         } else {
-          this.$snackbar.error(this.rules.message);
+          this.$snackbar.error(this.message.email);
         }
       }
     }
