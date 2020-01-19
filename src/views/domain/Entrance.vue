@@ -15,6 +15,15 @@ export default {
   name: "Entrance",
   components: {
     NavigationDrawers
+  },
+  data: () => ({
+    domain: '',
+  }),
+  created() {
+    // 配置网页域名规则
+  },
+  methods: {
+    
   }
 };
 </script>
