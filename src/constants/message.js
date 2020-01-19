@@ -13,4 +13,6 @@ export default function install(_Vue) {
     _Vue.prototype.NO_EMPTY_PASSWORD = "密码不可为空";
     _Vue.prototype.NO_EMPTY_NAME = "用户名不可为空";
 
+    _Vue.prototype.INCORRECT_DOMAIN = "用户名不能含有特殊字符";
+    _Vue.prototype.INCORRECT_EMAIL = "邮箱格式不正确";
 }

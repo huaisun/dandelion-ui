@@ -65,8 +65,9 @@ export default {
     /**检查用户名是否重复以及格式 */
     checkDomain() {
       let regex = this.$store.state.regex.domain;
-      if (this.form.domain.trim === "") {
+      if (this.form.domain.trim() === "") {
         this.rules.domain = true;
+        this.message.domain = this.NO_EMPTY_DOMAIN;
       } else if (regex.test(this.form.domain)) {
         getDomain({ domain: this.form.domain }).then(res => {
           if (res.data.code === 400) {
@@ -76,16 +77,19 @@ export default {
             this.message.domain = res.data.message;
           }
         });
+      } else {
+        this.rules.domain = true;
+        this.message.domain = this.INCORRECT_DOMAIN;
       }
     },
     /**检查邮箱是否重复以及格式 */
     checkEmail() {
       let regex = this.$store.state.regex.email;
-      if (this.form.email === "") {
+      if (this.form.email.trim() === "") {
         this.rules.email = true;
+        this.message.email = this.NO_EMPTY_EMAIL;
       } else if (regex.test(this.form.email)) {
         getEmail({ email: this.form.email }).then(res => {
-          console.log(res);
           if (res.data.code === 100) {
             this.rules.email = false;
           } else {
@@ -93,6 +97,9 @@ export default {
             this.message.email = res.data.message;
           }
         });
+      } else {
+        this.rules.email = true;
+        this.message.email = this.INCORRECT_EMAIL;
       }
     },
     /**提交注册 */
