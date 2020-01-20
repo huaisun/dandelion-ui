@@ -11,12 +11,12 @@
     <v-list dense nav class="py-0">
       <v-list-item two-line>
         <v-list-item-avatar>
-          <img src="https://randomuser.me/api/portraits/men/81.jpg" />
+          <img :src="userImage" />
         </v-list-item-avatar>
 
         <v-list-item-content>
-          <v-list-item-title>huaisun</v-list-item-title>
-          <v-list-item-subtitle>420007900@qq.com</v-list-item-subtitle>
+          <v-list-item-title>{{ user != null ? user.domain : '默认用户'}}</v-list-item-title>
+          <v-list-item-subtitle>{{ user != null ? user.email : "default@lch.com" }}</v-list-item-subtitle>
         </v-list-item-content>
       </v-list-item>
 
@@ -35,6 +35,8 @@
   </v-navigation-drawer>
 </template>
 <script>
+import DefaultJpg from "../../assets/photos/default.jpg";
+
 export default {
   name: "NavigationDrawers",
   data() {
@@ -45,8 +47,22 @@ export default {
         { title: "收藏", icon: "move_to_inbox" },
         { title: "排行榜", icon: "trending_up" },
         { title: "本地导入", icon: "mdi-help-box" }
-      ]
+      ],
+      user: JSON.parse(localStorage.getItem("user")),
+      userImage: DefaultJpg
     };
+  },
+  created() {
+    // 加载用户图像
+    this.loadImage();
+  },
+  methods: {
+    // 加载用户图像
+    loadImage() {
+      if(this.user == null || this.user.img === null || this.user.img === undefined) {
+        this.userImage = DefaultJpg;
+      }
+    }
   }
 };
 </script>

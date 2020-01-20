@@ -14,6 +14,7 @@
 </template>
 <script>
 import { login } from "@/api/home/sign.api.js";
+import {mapActions} from 'vuex';
 
 export default {
   name: "SignUp",
@@ -28,6 +29,9 @@ export default {
     this.signupBtn = document.getElementById("signup");
   },
   methods: {
+    ...mapActions([
+      'putUser',
+    ]),
     loginClick(e) {
       let parent = e.target.parentNode.parentNode;
       Array.from(e.target.parentNode.parentNode.classList).find(element => {
@@ -49,8 +53,9 @@ export default {
         login(this.form).then(res => {
           console.log(res);
           if (res.data.code === 0) {
+            this.putUser(res.data.data);
             localStorage.setItem("user", JSON.stringify(res.data.data));
-            this.$router.push({ name: "home" });
+            this.$router.push({ path: "/" + res.data.data.domain });
           } else {
             this.$snackbar.error(res.data.message);
           }
