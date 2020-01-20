@@ -9,7 +9,7 @@
   </v-app>
 </template>
 <script>
-import NavigationDrawers from "@/components/app/NavigationDrawers";
+import NavigationDrawers from "@/components/domain/NavigationDrawers";
 
 export default {
   name: "Entrance",

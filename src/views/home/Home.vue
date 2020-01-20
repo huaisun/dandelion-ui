@@ -19,7 +19,7 @@
 </template>
 
 <script>
-import Sign from "./sign/Sign";
+import Sign from "@/components/home/sign/Sign";
 
 export default {
   name: "home",
@@ -27,7 +27,7 @@ export default {
     Sign
   },
   data: () => ({
-    sign: false,
+    sign: false
   }),
   created() {
     // 获取路由传参

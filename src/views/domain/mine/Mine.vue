@@ -6,8 +6,8 @@
 </template>
 
 <script>
-import LoveLink from "./top/LoveLink";
-import MineCategory from "./body/MineCategory";
+import LoveLink from "@/components/domain/mine/top/LoveLink";
+import MineCategory from "@/components/domain/mine/body/MineCategory";
 import { mapActions } from "vuex";
 
 export default {
