@@ -2,10 +2,10 @@
   <div class="mine-body">
     <v-row>
       <v-col md="5" xs="6">
-        <CategoryList></CategoryList>
+        <CategoryList @loadDetail="loadDetail"></CategoryList>
       </v-col>
       <v-col md="7" xs="6">
-        <CategoryDetail></CategoryDetail>
+        <CategoryDetail :title="detailTitle" :links="links"></CategoryDetail>
       </v-col>
     </v-row>
   </div>
@@ -19,6 +19,17 @@ export default {
   components: {
     CategoryList,
     CategoryDetail
+  },
+  data: () => ({
+    detailTitle: "",
+    links: []
+  }),
+  methods: {
+    loadDetail(data) {
+      console.log(data);
+      this.detailTitle = data.name;
+      this.links = data.links;
+    }
   }
 };
 </script>

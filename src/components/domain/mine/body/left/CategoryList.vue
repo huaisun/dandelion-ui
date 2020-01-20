@@ -8,7 +8,7 @@
     <v-card-text>
       <v-list dense color="#385F73">
         <div v-for="(item, index) in categorys" :key="index">
-          <v-list-item @click="categoryClick">
+          <v-list-item @click="loadDetail(item)">
             <v-list-item-icon v-text="item.name.slice(0,1)" style="font-size: 18px;"></v-list-item-icon>
             <v-list-item-content>
               <h3 v-text="item.name"></h3>
@@ -18,16 +18,6 @@
         </div>
       </v-list>
     </v-card-text>
-
-    <v-card-actions>
-      <v-spacer></v-spacer>
-      <v-btn icon>
-        <v-icon>mdi-heart</v-icon>
-      </v-btn>
-      <v-btn icon>
-        <v-icon>mdi-share-variant</v-icon>
-      </v-btn>
-    </v-card-actions>
   </v-card>
 </template>
 <script>
@@ -42,9 +32,6 @@ export default {
     this.loadCategory();
   },
   methods: {
-    /**分类点击 */
-    categoryClick() {},
-
     /**加载分类列表 */
     loadCategory() {
       getCategoryByDomain({
@@ -52,10 +39,17 @@ export default {
       }).then(res => {
         if (res.data.code === 0) {
           this.categorys = res.data.data;
+          if (this.categorys != null && this.categorys.length > 0) {
+            this.loadDetail(res.data.data[0]);
+          }
         } else {
           this.$snackbar.error(res.data.message);
         }
       });
+    },
+    /**加载分类详情 */
+    loadDetail(data) {
+      this.$emit("loadDetail", data);
     }
   }
 };
