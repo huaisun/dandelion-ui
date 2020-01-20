@@ -2,8 +2,8 @@
   <v-navigation-drawer
     v-model="drawer"
     right
-    expand-on-hover
     color="primary"
+    expand-on-hover
     src="../../assets/photos/bg-2.jpg"
     absolute
     dark
@@ -13,16 +13,25 @@
         <v-list-item-avatar>
           <img :src="userImage" />
         </v-list-item-avatar>
-
-        <v-list-item-content>
-          <v-list-item-title>{{ user != null ? user.domain : '默认用户'}}</v-list-item-title>
-          <v-list-item-subtitle>{{ user != null ? user.email : "default@lch.com" }}</v-list-item-subtitle>
+        <v-list-item-content v-if="user == null">
+          <v-row>
+            <v-col cols="6">
+              <v-btn small outlined @click="signIn">登录</v-btn>
+            </v-col>
+            <v-col cols="6">
+              <v-btn small outlined @click="signUp">注册</v-btn>
+            </v-col>
+          </v-row>
+        </v-list-item-content>
+        <v-list-item-content v-else>
+          <v-list-item-title>{{ user.domain }}</v-list-item-title>
+          <v-list-item-subtitle>{{ user.email }}</v-list-item-subtitle>
         </v-list-item-content>
       </v-list-item>
 
       <v-divider></v-divider>
 
-      <v-list-item v-for="item in items" :key="item.title" link>
+      <v-list-item v-for="item in items" :key="item.title" link v-show="user != null || item.show">
         <v-list-item-icon>
           <v-icon>{{ item.icon }}</v-icon>
         </v-list-item-icon>
@@ -43,10 +52,10 @@ export default {
     return {
       drawer: true,
       items: [
-        { title: "我的", icon: "amp_stories" },
-        { title: "收藏", icon: "move_to_inbox" },
-        { title: "排行榜", icon: "trending_up" },
-        { title: "本地导入", icon: "mdi-help-box" }
+        { title: "我的", icon: "face", show: false },
+        { title: "收藏", icon: "cloud_download", show: false },
+        { title: "排行榜", icon: "equalizer", show: true },
+        { title: "本地导入", icon: "cloud_upload", show: false }
       ],
       user: JSON.parse(localStorage.getItem("user")),
       userImage: DefaultJpg
@@ -59,9 +68,21 @@ export default {
   methods: {
     // 加载用户图像
     loadImage() {
-      if(this.user == null || this.user.img === null || this.user.img === undefined) {
+      if (
+        this.user == null ||
+        this.user.img === null ||
+        this.user.img === undefined
+      ) {
         this.userImage = DefaultJpg;
       }
+    },
+    // 登录
+    signIn() {
+      this.$router.push({ name: "Sign", params: { sign: true } });
+    },
+    // 注册
+    signUp() {
+      this.$router.push({ name: "Sign", params: { sign: false } });
     }
   }
 };

@@ -18,6 +18,10 @@ const routes = [{
     name: 'Home',
     component: Home,
 }, {
+    path: '/sign',
+    name: 'Sign',
+    component: Home,
+}, {
     path: '/active',
     name: 'active',
     component: Active

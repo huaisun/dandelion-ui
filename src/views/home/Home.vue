@@ -12,21 +12,27 @@
         <div class="logo home-body-div"></div>
       </div>
       <div class="home-container">
-        <Sign></Sign>
+        <Sign :sign="sign"></Sign>
       </div>
     </div>
   </div>
 </template>
 
 <script>
-import Sign from "./sign/Sign";
+import Sign from "../sign/Sign";
 
 export default {
   name: "home",
   components: {
     Sign
   },
-  data: () => ({})
+  data: () => ({
+    sign: false,
+  }),
+  created() {
+    // 获取路由传参
+    this.sign = this.$route.params.sign;
+  }
 };
 </script>
 

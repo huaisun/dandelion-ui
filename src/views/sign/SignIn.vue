@@ -14,10 +14,11 @@
 </template>
 <script>
 import { login } from "@/api/home/sign.api.js";
-import {mapActions} from 'vuex';
+import { mapActions } from "vuex";
 
 export default {
   name: "SignUp",
+  props: ["sign"],
   data: () => ({
     signupBtn: document.getElementById("signup"),
     form: {
@@ -27,11 +28,14 @@ export default {
   }),
   mounted() {
     this.signupBtn = document.getElementById("signup");
+    if (this.sign) {
+      document.getElementById("login").click();
+    }
   },
   methods: {
-    ...mapActions([
-      'putUser',
-    ]),
+    // 进行store中的函数注入到本组件
+    ...mapActions(["putUser"]),
+
     loginClick(e) {
       let parent = e.target.parentNode.parentNode;
       Array.from(e.target.parentNode.parentNode.classList).find(element => {
@@ -43,6 +47,7 @@ export default {
         }
       });
     },
+
     /**登录操作 */
     submit() {
       if (this.isStringEmpty(this.form.domain)) {
