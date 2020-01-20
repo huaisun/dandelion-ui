@@ -1,17 +1,20 @@
 <template>
   <div>
     <LoveLink ref="love_link_ref"></LoveLink>
+    <MineCategory></MineCategory>
   </div>
 </template>
 
 <script>
-import LoveLink from "./LoveLink";
+import LoveLink from "./top/LoveLink";
+import MineCategory from "./body/MineCategory";
 import { mapActions } from "vuex";
 
 export default {
   name: "Mine",
   components: {
-    LoveLink
+    LoveLink,
+    MineCategory
   },
   created() {
     this.checkDomain();

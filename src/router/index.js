@@ -1,6 +1,6 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
-import Active from '../views/Active'
+import Active from '../views/com/Active'
 
 // 主页
 import Home from '../views/home/Home'
