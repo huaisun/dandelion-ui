@@ -3,7 +3,10 @@
 import axios from 'axios'
 
 // 获取用户最爱的链接
-export const getLoveLinkByDomain = params => { return axios.get("/lch/link/getLoveLinkByDomain", { params: params }) }
+export const getLoveLinkByDomain = params => { return axios.get("/lch/link/getLoveLinkByDomain", { params }) }
 
 // 删除用户最爱的链接
-export const deleteLinkByUserId = params => { return axios.delete("lch/link/deleteLinkByUserId", { params: params }) }
+export const deleteLinkByUserId = params => { return axios.delete("lch/link/deleteLinkByUserId", { params }) }
+
+// 获取用户自身的分类
+export const getCategoryByDomain = params => { return axios.get("/lch/category/getCategoryByDomain", { params }) }
