@@ -7,9 +7,10 @@ import Home from '../views/home/Home'
 
 // 入口
 import Entrance from '../views/domain/Entrance'
+import Mine from '../views/domain/mine/Mine'
 
 // 404
-import FourZeroFour from '../views/common/404'
+import FourZeroFour from '../views/com/404'
 
 Vue.use(VueRouter)
 
@@ -31,8 +32,14 @@ const routes = [{
     component: FourZeroFour
 }, {
     path: '/:domain',
-    name: 'domain',
     component: Entrance,
+    children: [
+        {
+            path: '/',
+            name: 'mine',
+            component: Mine,
+        }
+    ]
 }, {
     path: '*',
     name: '404',

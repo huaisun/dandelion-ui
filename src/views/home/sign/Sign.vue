@@ -40,7 +40,7 @@ export default {
     background-repeat: no-repeat;
     background-position: left bottom;
     background-size: 500px;
-    background-image: url(../../assets/photos/sign.jpg);
+    background-image: url(../../../assets/photos/sign.jpg);
   }
 }
 </style>

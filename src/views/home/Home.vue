@@ -19,7 +19,7 @@
 </template>
 
 <script>
-import Sign from "../sign/Sign";
+import Sign from "./sign/Sign";
 
 export default {
   name: "home",
