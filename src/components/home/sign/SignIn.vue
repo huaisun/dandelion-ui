@@ -56,7 +56,6 @@ export default {
         this.$snackbar.error(this.NO_EMPTY_PASSWORD);
       } else {
         login(this.form).then(res => {
-          console.log(res);
           if (res.data.code === 0) {
             this.putUser(res.data.data);
             localStorage.setItem("user", JSON.stringify(res.data.data));

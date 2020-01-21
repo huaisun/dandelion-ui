@@ -26,7 +26,6 @@ export default {
   }),
   methods: {
     loadDetail(data) {
-      console.log(data);
       this.detailTitle = data.name;
       this.links = data.links;
     }

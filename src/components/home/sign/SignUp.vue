@@ -122,7 +122,7 @@ export default {
           });
         } else if (this.rules.domain) {
           this.$snackbar.error(this.message.domain);
-        } else {
+        } else if (this.rules.email) {
           this.$snackbar.error(this.message.email);
         }
       }
