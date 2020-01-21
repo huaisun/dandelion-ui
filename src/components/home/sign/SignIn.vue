@@ -51,7 +51,7 @@ export default {
     /**登录操作 */
     submit() {
       if (this.isStringEmpty(this.form.domain)) {
-        this.$snackbar.error(this.NO_EMPTY_NAME);
+        this.$snackbar.error(this.NO_EMPTY_DOMAIN);
       } else if (this.isStringEmpty(this.form.password)) {
         this.$snackbar.error(this.NO_EMPTY_PASSWORD);
       } else {

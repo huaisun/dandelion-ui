@@ -11,3 +11,6 @@ export const addUser = params => { return axios.post("/lch/user/addUser", params
 
 // 登录
 export const login = params => { return axios.post("/lch/user/login", params) }
+
+// 发送验证码
+export const sendVerification = params => { return axios.get("/lch/user/sendVerification", { params }) }

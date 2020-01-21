@@ -20,13 +20,28 @@
         placeholder="邮箱"
         @blur="checkEmail"
       />
+      <button class="send-verification" @click="sendVerification">发送验证码</button>
+      <input type="text" maxlength="4" v-model="form.code" class="input" placeholder="验证码" />
       <input type="password" v-model="form.password" class="input" placeholder="密码" />
+      <input
+        type="password"
+        v-model="form.repassword"
+        class="input"
+        :class="{'error-input': rules.password}"
+        placeholder="验证密码"
+        @change="checkPassword"
+      />
     </div>
     <button class="submit-btn" @click="submit">一键 注册</button>
   </div>
 </template>
 <script>
-import { getDomain, getEmail, addUser } from "@/api/home/sign.api.js";
+import {
+  getDomain,
+  getEmail,
+  addUser,
+  sendVerification
+} from "@/api/home/sign.api.js";
 
 export default {
   name: "SignIn",
@@ -35,21 +50,35 @@ export default {
     form: {
       domain: "",
       email: "",
-      password: ""
+      code: "",
+      password: "",
+      repassword: ""
     },
     rules: {
       domain: false,
-      email: false
+      email: false,
+      password: false
     },
     message: {
       domain: "",
-      email: ""
+      email: "",
+      password: ""
     }
   }),
   mounted() {
     this.loginBtn = document.getElementById("login");
   },
   methods: {
+    /**进行注册码发送 */
+    sendVerification() {
+      if (this.rules.email) {
+        this.$snackbar.error(this.message.email);
+      } else {
+        sendVerification({ email: this.form.email }).then(res => {
+          console.log(res);
+        });
+      }
+    },
     /**响应注册点击 */
     signUp(e) {
       let parent = e.target.parentNode;
@@ -82,14 +111,23 @@ export default {
         this.message.domain = this.INCORRECT_DOMAIN;
       }
     },
+    /**检查密码是否一致 */
+    checkPassword() {
+      if (this.form.repassword !== this.form.password) {
+        this.rules.password = true;
+        this.message.password = this.INCORRECT_PASSWORD;
+      } else {
+        this.rules.password = false;
+      }
+    },
     /**检查邮箱是否重复以及格式 */
-    checkEmail() {
+    async checkEmail() {
       let regex = this.$store.state.regex.email;
       if (this.form.email.trim() === "") {
         this.rules.email = true;
         this.message.email = this.NO_EMPTY_EMAIL;
       } else if (regex.test(this.form.email)) {
-        getEmail({ email: this.form.email }).then(res => {
+        await getEmail({ email: this.form.email }).then(res => {
           if (res.data.code === 100) {
             this.rules.email = false;
           } else {
@@ -105,11 +143,13 @@ export default {
     /**提交注册 */
     submit() {
       if (this.isStringEmpty(this.form.domain)) {
-        this.$snackbar.error("用户名不可为空");
+        this.$snackbar.error(this.NO_EMPTY_DOMAIN);
       } else if (this.isStringEmpty(this.form.email)) {
-        this.$snackbar.error("邮箱不可为空");
+        this.$snackbar.error(this.NO_EMPTY_EMAIL);
       } else if (this.isStringEmpty(this.form.password)) {
-        this.$snackbar.error("密码不可为空");
+        this.$snackbar.error(this.NO_EMPTY_PASSWORD);
+      } else if (this.isStringEmpty(this.form.code)) {
+        this.$snackbar.error(this.NO_EMPTY_CODE);
       } else {
         if (!this.rules.domain && !this.rules.email) {
           // 进行注册业务
@@ -185,6 +225,18 @@ export default {
     opacity: 1;
     visibility: visible;
     -webkit-transition: all 0.3s ease;
+    .send-verification {
+      position: fixed;
+      background-color: #2196f3;
+      border-color: #2196f3;
+      border-radius: 4px;
+      padding: 0 9px;
+      margin: 3px 0;
+      height: 30px;
+      color: white;
+      left: 150px;
+      font-size: 14px;
+    }
 
     .input {
       border: 0;
@@ -202,7 +254,7 @@ export default {
         border-bottom: 0;
       }
       &::-webkit-input-placeholder {
-        color: rgba(0, 0, 0, 0.4);
+        color: rgba(0, 0, 0, 0.6);
       }
     }
     .error-input {
