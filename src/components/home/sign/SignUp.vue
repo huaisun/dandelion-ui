@@ -175,7 +175,7 @@ export default {
             console.log(res);
             if (res.data.code === 0) {
               this.$snackbar.success(this.SIGN_UP_SUCCESS);
-              localStorage.setItem("user", res.data.data);
+              localStorage.setItem("user", JSON.stringify(res.data.data));
               this.$router.push({ path: "/" + res.data.data.domain });
             } else {
               this.$snackbar.error(res.data.message);

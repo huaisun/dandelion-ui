@@ -1,24 +1,25 @@
 <template>
-  <v-card dark width="100%" max-width="544px" class="mx-auto" color="#385F73">
-    <v-card-title>
-      <v-icon large left>dashboard</v-icon>
-      <span class="title font-weight-light">分类 列表</span>
-    </v-card-title>
+  <v-navigation-drawer class="category category-1" permanent>
+    <v-list-item>
+      <v-list-item-content>
+        <v-list-item-title class="title">分类</v-list-item-title>
+      </v-list-item-content>
+    </v-list-item>
 
-    <v-card-text>
-      <v-list dense color="#385F73">
-        <div v-for="(item, index) in categorys" :key="index">
-          <v-list-item @click="loadDetail(item)">
-            <v-list-item-icon v-text="item.name.slice(0,1)" style="font-size: 18px;"></v-list-item-icon>
-            <v-list-item-content>
-              <h3 v-text="item.name"></h3>
-            </v-list-item-content>
-          </v-list-item>
-          <v-divider></v-divider>
-        </div>
-      </v-list>
-    </v-card-text>
-  </v-card>
+    <v-divider></v-divider>
+
+    <v-list dense nav>
+      <v-list-item v-for="item in categorys" :key="item.id" link @click="loadDetail(item)">
+        <v-list-item-icon v-text="item.name.slice(0,1)" style="font-size: 18px;"></v-list-item-icon>
+
+        <v-list-item-content>
+          <v-list-item-title>
+            <h3 v-text="item.name"></h3>
+          </v-list-item-title>
+        </v-list-item-content>
+      </v-list-item>
+    </v-list>
+  </v-navigation-drawer>
 </template>
 <script>
 import { getCategoryByDomain } from "@/api/domain/mine.api.js";
@@ -54,3 +55,14 @@ export default {
   }
 };
 </script>
+
+<style scoped>
+.category-1 {
+  background-image: linear-gradient(
+    to right,
+    #a1c4fd 0%,
+    #c2e9fb 51%,
+    #a1c4fd 100%
+  );
+}
+</style>

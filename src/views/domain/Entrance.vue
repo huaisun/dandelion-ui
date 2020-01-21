@@ -1,7 +1,7 @@
 <template>
-  <v-app>
+  <v-app id="app">
     <!-- 导航栏 -->
-    <NavigationDrawers></NavigationDrawers>
+    <!-- <NavigationDrawers></NavigationDrawers> -->
     <!-- 内容 -->
     <v-content>
       <router-view />
@@ -9,21 +9,22 @@
   </v-app>
 </template>
 <script>
-import NavigationDrawers from "@/components/domain/NavigationDrawers";
+// import NavigationDrawers from "@/components/domain/NavigationDrawers";
 
 export default {
   name: "Entrance",
   components: {
-    NavigationDrawers
+    // NavigationDrawers
   },
   data: () => ({
-    domain: '',
+    domain: ""
   }),
   created() {
     // 配置网页域名规则
   },
-  methods: {
-    
-  }
+  methods: {}
 };
 </script>
+
+<style scoped>
+</style>

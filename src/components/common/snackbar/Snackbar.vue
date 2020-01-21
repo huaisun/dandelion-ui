@@ -32,6 +32,7 @@ export default {
       this.icon = "error";
     },
     warning(mes) {
+      debugger;
       this.color = "#FF9800";
       this.open = true;
       this.text = mes;
@@ -39,11 +40,11 @@ export default {
       this.icon = 'warning';
     },
     success(mes) {
-      this.color = "green";
+      this.color = "#4CAF50";
       this.open = true;
       this.text = mes;
       this.timeout = 3000;
-      this.icon = 'success';
+      this.icon = 'mdi-checkbox-marked-circle';
     }
   }
 };

@@ -1,10 +1,10 @@
 <template>
   <div class="mine-body">
     <v-row>
-      <v-col md="5" xs="6">
+      <v-col lg="2" md="4" sm="6" xs="12">
         <CategoryList @loadDetail="loadDetail"></CategoryList>
       </v-col>
-      <v-col md="7" xs="6">
+      <v-col lg="10" md="8" sm="6" xs="12">
         <CategoryDetail :title="detailTitle" :links="links"></CategoryDetail>
       </v-col>
     </v-row>
@@ -35,6 +35,6 @@ export default {
 
 <style scoped>
 .mine-body {
-  padding: 20px 80px 0 20px;
+  padding: 20px 100px 0 20px;
 }
 </style>

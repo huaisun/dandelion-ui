@@ -1,11 +1,11 @@
 <template>
   <v-navigation-drawer
     v-model="drawer"
+    src="../../assets/photos/sign.jpg"
     right
-    color="primary"
-    expand-on-hover
-    src="../../assets/photos/bg-2.jpg"
     absolute
+    expand-on-hover
+    permanent
     dark
   >
     <v-list dense nav class="py-0">
@@ -58,7 +58,8 @@ export default {
         { title: "本地导入", icon: "cloud_upload", show: false }
       ],
       user: JSON.parse(localStorage.getItem("user")),
-      userImage: DefaultJpg
+      userImage: DefaultJpg,
+      mini: false
     };
   },
   created() {

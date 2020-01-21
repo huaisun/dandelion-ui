@@ -1,12 +1,12 @@
 <template>
-  <v-card dark width="100%" max-width="644px" class="mx-auto" color="#00BCD4">
+  <v-card width="100%" max-width="720px" class="mx-auto category category-2">
     <v-card-title>
-      <v-icon large left v-text="title.slice(0,1)"></v-icon>
+      <v-icon large left v-text="title.slice(0,1).toUpperCase()"></v-icon>
       <span class="title font-weight-light" v-text="title"></span>
     </v-card-title>
 
     <v-card-text>
-      <v-list dense color="#00BCD4">
+      <v-list dense color="rgba(0,0,0,0)">
         <div v-for="(item, index) in links" :key="index">
           <v-list-item @click="urlClick(item)">
             <v-list-item-icon>
@@ -40,3 +40,9 @@ export default {
   }
 };
 </script>
+
+<style scoped>
+.category-2 {
+ background-image: linear-gradient(to right, #f6d365 0%, #fda085 51%, #f6d365 100%);
+}
+</style>
