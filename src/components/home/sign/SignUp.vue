@@ -20,7 +20,12 @@
         placeholder="邮箱"
         @blur="checkEmail"
       />
-      <button class="send-verification" @click="sendVerification">发送验证码</button>
+      <button
+        class="send-verification"
+        :disabled="sendCode"
+        :class="sendCode ? 'disabled': 'active'"
+        @click="sendVerification"
+      >发送验证码{{ sendCode ? '(' + sendTime + ')' : '' }}</button>
       <input type="text" maxlength="4" v-model="form.code" class="input" placeholder="验证码" />
       <input type="password" v-model="form.password" class="input" placeholder="密码" />
       <input
@@ -63,7 +68,9 @@ export default {
       domain: "",
       email: "",
       password: ""
-    }
+    },
+    sendCode: false,
+    sendTime: 60
   }),
   mounted() {
     this.loginBtn = document.getElementById("login");
@@ -75,7 +82,18 @@ export default {
         this.$snackbar.error(this.message.email);
       } else {
         sendVerification({ email: this.form.email }).then(res => {
-          console.log(res);
+          if (res.data.code === 0) {
+            this.$snackbar.success(this.SNED_SUCCESS);
+            this.sendCode = true;
+            this.sendTime = 60;
+            let codeTime = setInterval(() => {
+              this.sendTime--;
+              if (this.sendTime === 0) {
+                this.sendCode = false;
+                clearInterval(codeTime);
+              }
+            }, 1000);
+          }
         });
       }
     },
@@ -151,11 +169,14 @@ export default {
       } else if (this.isStringEmpty(this.form.code)) {
         this.$snackbar.error(this.NO_EMPTY_CODE);
       } else {
-        if (!this.rules.domain && !this.rules.email) {
+        if (!this.rules.domain && !this.rules.email && !this.rules.password) {
           // 进行注册业务
           addUser(this.form).then(res => {
+            console.log(res);
             if (res.data.code === 0) {
               this.$snackbar.success(this.SIGN_UP_SUCCESS);
+              localStorage.setItem("user", res.data.data);
+              this.$router.push({ path: "/" + res.data.data.domain });
             } else {
               this.$snackbar.error(res.data.message);
             }
@@ -164,6 +185,8 @@ export default {
           this.$snackbar.error(this.message.domain);
         } else if (this.rules.email) {
           this.$snackbar.error(this.message.email);
+        } else if (this.rules.password) {
+          this.$snackbar.error(this.message.password);
         }
       }
     }
@@ -225,17 +248,28 @@ export default {
     opacity: 1;
     visibility: visible;
     -webkit-transition: all 0.3s ease;
+
     .send-verification {
       position: fixed;
-      background-color: #2196f3;
-      border-color: #2196f3;
       border-radius: 4px;
       padding: 0 9px;
       margin: 3px 0;
       height: 30px;
+      font-size: 14px;
+    }
+
+    .active {
+      background-color: #2196f3;
+      border-color: #2196f3;
       color: white;
       left: 150px;
-      font-size: 14px;
+    }
+
+    .disabled {
+      background-color: #eee;
+      border-color: #eee;
+      color: black;
+      left: 130px;
     }
 
     .input {
