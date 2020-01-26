@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div style="height: 100%">
     <LoveLink ref="love_link_ref"></LoveLink>
     <MineCategory></MineCategory>
   </div>

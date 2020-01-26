@@ -1,7 +1,7 @@
 <template>
   <div>
     <!-- 用户最喜爱的网站标题 -->
-    <v-card class="mx-auto" raised min-height="76">
+    <v-card class="mx-auto category category-1" tile min-height="76">
       <v-card-text>
         <v-row style="padding: 0 10px">
           <v-menu offset-y>
@@ -10,7 +10,7 @@
                 v-show="$store.state.domain.authority.edit"
                 style="height: 47px; width: 47px;"
                 v-on="on"
-                color="purple"
+                color="green"
                 icon
               >
                 <v-icon>more_vert</v-icon>
@@ -62,7 +62,7 @@
       </v-card-text>
     </v-card>
     <v-dialog v-model="addLinkDialog" max-width="600" data-app="true">
-      <AddLink title="宝藏" subtitle="收藏到你的最爱" flag="love" @closeDialog="closeLinkDialog"></AddLink>
+      <AddLink title="最喜爱链接" subtitle="收藏到你的最爱" flag="love" @closeDialog="closeLinkDialog"></AddLink>
     </v-dialog>
     <!-- 消息提示 -->
     <v-snackbar :color="color" :timeout="timeout" v-model="snackbar">

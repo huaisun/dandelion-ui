@@ -16,10 +16,10 @@
         <v-list-item-content v-if="user == null">
           <v-row>
             <v-col cols="6">
-              <v-btn small outlined @click="signIn">登录</v-btn>
+              <v-btn color="primary" small @click="signIn">登录</v-btn>
             </v-col>
             <v-col cols="6">
-              <v-btn small outlined @click="signUp">注册</v-btn>
+              <v-btn color="warning" small @click="signUp">注册</v-btn>
             </v-col>
           </v-row>
         </v-list-item-content>

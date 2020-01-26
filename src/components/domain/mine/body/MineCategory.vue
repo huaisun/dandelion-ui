@@ -1,10 +1,10 @@
 <template>
   <div class="mine-body">
-    <v-row>
-      <v-col lg="2" md="4" sm="6" xs="12">
+    <v-row style="height: 100%">
+      <v-col lg="2" md="4" sm="6" xs="12" style="padding: 0">
         <CategoryList @loadDetail="loadDetail"></CategoryList>
       </v-col>
-      <v-col lg="10" md="8" sm="6" xs="12">
+      <v-col lg="10" md="8" sm="6" xs="12" style="padding: 20px">
         <CategoryDetail :title="detailTitle" :links="links"></CategoryDetail>
       </v-col>
     </v-row>
@@ -35,6 +35,7 @@ export default {
 
 <style scoped>
 .mine-body {
-  padding: 20px 100px 0 20px;
+  padding: 0 100px 0 0;
+  height: calc(100% - 80px);
 }
 </style>

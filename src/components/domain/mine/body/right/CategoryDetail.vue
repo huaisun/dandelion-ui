@@ -1,5 +1,5 @@
 <template>
-  <v-card width="100%" max-width="720px" class="mx-auto category category-2">
+  <v-card width="100%" max-width="720px" class="mx-auto category category-1 category-detail">
     <v-card-title>
       <v-icon large left v-text="title.slice(0,1).toUpperCase()"></v-icon>
       <span class="title font-weight-light" v-text="title"></span>
@@ -40,9 +40,3 @@ export default {
   }
 };
 </script>
-
-<style scoped>
-.category-2 {
- background-image: linear-gradient(to right, #f6d365 0%, #fda085 51%, #f6d365 100%);
-}
-</style>

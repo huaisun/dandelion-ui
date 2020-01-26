@@ -1,5 +1,5 @@
 <template>
-  <v-card>
+  <v-card dark>
     <v-card-title>
       <span class="headline">{{ title }}</span>
     </v-card-title>
@@ -14,12 +14,12 @@
           </v-col>
         </v-row>
       </v-container>
-      <small>*{{ subtitle }}</small>
+      <small style="color: #F44336">*{{ subtitle }}</small>
     </v-card-text>
     <v-card-actions>
       <v-spacer></v-spacer>
-      <v-btn color="blue darken-1" text @click="closeDialog">关闭</v-btn>
-      <v-btn color="blue darken-1" text @click="saveUrl">收藏</v-btn>
+      <v-btn color="warning" text @click="closeDialog">关闭</v-btn>
+      <v-btn color="success" text @click="saveUrl">保存</v-btn>
     </v-card-actions>
     <!-- 消息提示 -->
     <v-snackbar :color="color" :timeout="timeout" v-model="snackbar">
