@@ -25,7 +25,7 @@
 </template>
 
 <script>
-import { saveLoveLink } from "@/api/domain/mine.api.js";
+import { saveLoveLink, getTitleByUrl } from "@/api/domain/mine.api.js";
 export default {
   name: "AddLink",
   props: ["data"],
@@ -47,26 +47,34 @@ export default {
       if (user == null || user === undefined) {
         this.$snackbar.warning(this.ADD_LOVE_ERROR);
       } else {
-        saveLoveLink({ url: this.url, name: this.name, userId: user.id }).then(
-          res => {
+        if (this.url.indexOf("http") == 0) {
+          saveLoveLink({
+            url: this.url,
+            name: this.name,
+            userId: user.id
+          }).then(res => {
             if (res.data.code === 0) {
               this.closeDialog();
             } else {
               this.$snackbar.error(res.data.message);
             }
-          }
-        );
+          });
+        } else {
+          this.$snackbar.warning(this.INCORRECT_LINK);
+        }
       }
     },
     /**获取title */
     urlChange() {
-      this.$axios
-        .get("/lch/link/getTitleByUrl", { params: { url: this.url } })
-        .then(res => {
+      if (this.url.indexOf("http") === 0) {
+        getTitleByUrl({ url: this.url }).then(res => {
           if (res.data.code === 0) {
             this.name = res.data.data;
           }
         });
+      } else {
+        this.$snackbar.warning(this.INCORRECT_LINK);
+      }
     }
   }
 };

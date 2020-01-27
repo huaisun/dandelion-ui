@@ -64,11 +64,6 @@
     <v-dialog v-model="addLinkDialog" max-width="600" data-app="true">
       <AddLink @closeDialog="closeLinkDialog"></AddLink>
     </v-dialog>
-    <!-- 消息提示 -->
-    <v-snackbar :color="color" :timeout="timeout" v-model="snackbar">
-      {{ text }}
-      <v-btn text @click="snackbar = false">关闭</v-btn>
-    </v-snackbar>
   </div>
 </template>
 <script>
@@ -90,10 +85,6 @@ export default {
     editFlag: false,
     links: [],
     removeLink: [],
-    snackbar: false,
-    timeout: 3000,
-    color: "",
-    text: ""
   }),
   created() {
     // 初始化加载用户收藏数据
@@ -146,9 +137,7 @@ export default {
               this.editFlag = false;
               this.removeLink = [];
             } else {
-              this.color = this.COLOR_ERROR;
-              this.text = res.data.message;
-              this.snackbar = true;
+              this.$snackbar.error(res.data.message);
             }
           });
         }

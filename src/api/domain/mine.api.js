@@ -13,3 +13,9 @@ export const getCategoryByDomain = params => { return axios.get("/lch/category/g
 
 // 保存用户的最喜爱链接
 export const saveLoveLink = params => { return axios.post("/lch/link/addLoveLink", params) }
+
+// 获取url的信息
+export const getTitleByUrl = params => { return axios.get("/lch/link/getTitleByUrl", { params }) }
+
+// 添加分类
+export const addCategory = params => { return axios.post("/lch/category/addCategory", params) }

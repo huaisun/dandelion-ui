@@ -13,8 +13,11 @@ export default function install(_Vue) {
     _Vue.prototype.NO_EMPTY_DOMAIN = "请填入用户名";
     _Vue.prototype.NO_EMPTY_PASSWORD = "请填入密码";
     _Vue.prototype.NO_EMPTY_CODE = "请填入验证码";
+    _Vue.prototype.NO_EMPTY_CATEGORY = "请填入分类名称";
 
     _Vue.prototype.INCORRECT_DOMAIN = "用户名不能含有特殊字符";
     _Vue.prototype.INCORRECT_EMAIL = "邮箱格式不正确";
     _Vue.prototype.INCORRECT_PASSWORD = "密码不一致";
+
+    _Vue.prototype.INCORRECT_LINK = "链接需要加入http或者https网络协议";
 }

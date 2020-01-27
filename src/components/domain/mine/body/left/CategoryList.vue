@@ -18,7 +18,7 @@
         </v-list-item-icon>
         <v-list-item-content>
           <v-list-item-title>
-            <h3>添加链接</h3>
+            <h3>添加分类</h3>
           </v-list-item-title>
         </v-list-item-content>
       </v-list-item>
@@ -38,15 +38,23 @@
         </v-list-item-content>
       </v-list-item>
     </v-list>
+    <v-dialog v-model="addCategoryDialog" max-width="600" data-app="true">
+      <AddCategory @closeDialog="closeDialog" @refresh="refreshCategory"></AddCategory>
+    </v-dialog>
   </v-navigation-drawer>
 </template>
 <script>
 import { getCategoryByDomain } from "@/api/domain/mine.api.js";
+import AddCategory from "./AddCategory";
 
 export default {
   name: "CategoryList",
+  components: {
+    AddCategory
+  },
   data: () => ({
-    categorys: []
+    categorys: [],
+    addCategoryDialog: false,
   }),
   created() {
     this.loadCategory();
@@ -73,7 +81,14 @@ export default {
     },
     /**添加分类 */
     addCategory() {
-      
+      this.addCategoryDialog = true;
+    },
+    closeDialog() {
+      this.addCategoryDialog = false;
+    }, 
+    refreshCategory() {
+      this.addCategoryDialog = false;
+      this.loadCategory();
     }
   }
 };

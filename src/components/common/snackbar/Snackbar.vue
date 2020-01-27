@@ -32,7 +32,6 @@ export default {
       this.icon = "error";
     },
     warning(mes) {
-      debugger;
       this.color = "#FF9800";
       this.open = true;
       this.text = mes;
