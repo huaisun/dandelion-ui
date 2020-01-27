@@ -12,6 +12,16 @@
     <v-divider></v-divider>
 
     <v-list dense nav>
+      <v-list-item style="padding: 0 20px; border-color: #eee" @click="addCategory">
+        <v-list-item-icon>
+          <v-icon>library_add</v-icon>
+        </v-list-item-icon>
+        <v-list-item-content>
+          <v-list-item-title>
+            <h3>添加链接</h3>
+          </v-list-item-title>
+        </v-list-item-content>
+      </v-list-item>
       <v-list-item
         style="padding: 0 20px;"
         v-for="item in categorys"
@@ -60,6 +70,10 @@ export default {
     /**加载分类详情 */
     loadDetail(data) {
       this.$emit("loadDetail", data);
+    },
+    /**添加分类 */
+    addCategory() {
+      
     }
   }
 };

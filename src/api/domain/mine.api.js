@@ -10,3 +10,6 @@ export const deleteLinkByUserId = params => { return axios.delete("lch/link/dele
 
 // 获取用户自身的分类
 export const getCategoryByDomain = params => { return axios.get("/lch/category/getCategoryByDomain", { params }) }
+
+// 保存用户的最喜爱链接
+export const saveLoveLink = params => { return axios.post("/lch/link/addLoveLink", params) }

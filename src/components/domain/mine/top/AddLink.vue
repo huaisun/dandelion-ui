@@ -1,7 +1,7 @@
 <template>
-  <v-card dark>
+  <v-card dark class="category category-1">
     <v-card-title>
-      <span class="headline">{{ title }}</span>
+      <span class="headline">最喜爱链接</span>
     </v-card-title>
     <v-card-text>
       <v-container>
@@ -14,32 +14,24 @@
           </v-col>
         </v-row>
       </v-container>
-      <small style="color: #F44336">*{{ subtitle }}</small>
+      <small style="color: #F44336">*收藏到你的最爱</small>
     </v-card-text>
     <v-card-actions>
       <v-spacer></v-spacer>
       <v-btn color="warning" text @click="closeDialog">关闭</v-btn>
       <v-btn color="success" text @click="saveUrl">保存</v-btn>
     </v-card-actions>
-    <!-- 消息提示 -->
-    <v-snackbar :color="color" :timeout="timeout" v-model="snackbar">
-      {{ text }}
-      <v-btn text @click="snackbar = false">关闭</v-btn>
-    </v-snackbar>
   </v-card>
 </template>
 
 <script>
+import { saveLoveLink } from "@/api/domain/mine.api.js";
 export default {
   name: "AddLink",
-  props: ["title", "subtitle", "flag", "data"],
+  props: ["data"],
   data: () => ({
     url: "",
-    name: "",
-    snackbar: false,
-    timeout: 3000,
-    color: "",
-    text: ""
+    name: ""
   }),
   methods: {
     /**关闭弹出框 */
@@ -53,29 +45,17 @@ export default {
       let user = JSON.parse(localStorage.getItem("user"));
       // 判断是否为空。如果为空，则进行提示
       if (user == null || user === undefined) {
-        this.text = this.ADD_LOVE_ERROR;
-        this.color = this.COLOR_WARNING;
-        this.snackbar = true;
+        this.$snackbar.warning(this.ADD_LOVE_ERROR);
       } else {
-        let url = "/lch/link/addLoveLink";
-        let vo = {
-          url: this.url,
-          name: this.name,
-          userId: user.id
-        };
-        if (this.flag === "category") {
-          url = "/lch/category/addCategoryLink";
-          vo.categoryId = this.data.id;
-        }
-        this.$axios.post(url, vo).then(res => {
-          if (res.data.code === 0) {
-            this.closeDialog();
-          } else {
-            this.color = this.COLOR_ERROR;
-            this.text = res.data.message;
-            this.snackbar = true;
+        saveLoveLink({ url: this.url, name: this.name, userId: user.id }).then(
+          res => {
+            if (res.data.code === 0) {
+              this.closeDialog();
+            } else {
+              this.$snackbar.error(res.data.message);
+            }
           }
-        });
+        );
       }
     },
     /**获取title */

@@ -10,7 +10,7 @@
                 v-show="$store.state.domain.authority.edit"
                 style="height: 47px; width: 47px;"
                 v-on="on"
-                color="green"
+                color="purple"
                 icon
               >
                 <v-icon>more_vert</v-icon>
@@ -42,7 +42,7 @@
               @click="linkClik(tag)"
             >
               <div left class="avator-ico">
-                <img :src="'data:image/png;base64,' + tag.ico" />
+                <img :src="tag.ico != null ? 'data:image/png;base64,' + tag.ico: ''" />
               </div>
               <div class="link-name">{{ tag.name }}</div>
             </v-chip>
@@ -62,7 +62,7 @@
       </v-card-text>
     </v-card>
     <v-dialog v-model="addLinkDialog" max-width="600" data-app="true">
-      <AddLink title="最喜爱链接" subtitle="收藏到你的最爱" flag="love" @closeDialog="closeLinkDialog"></AddLink>
+      <AddLink @closeDialog="closeLinkDialog"></AddLink>
     </v-dialog>
     <!-- 消息提示 -->
     <v-snackbar :color="color" :timeout="timeout" v-model="snackbar">
@@ -76,7 +76,7 @@ import {
   getLoveLinkByDomain,
   deleteLinkByUserId
 } from "@/api/domain/mine.api.js";
-import AddLink from "@/components/dialog/AddLink";
+import AddLink from "./AddLink";
 
 export default {
   name: "LoveLink",
