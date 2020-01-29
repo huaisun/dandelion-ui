@@ -2,10 +2,16 @@
   <div class="mine-body">
     <v-row style="height: 100%">
       <v-col lg="2" md="4" sm="6" xs="12" style="padding: 0">
-        <CategoryList @loadDetail="loadDetail"></CategoryList>
+        <CategoryList ref="CategoryList" @loadDetail="loadDetail"></CategoryList>
       </v-col>
       <v-col lg="10" md="8" sm="6" xs="12" style="padding: 20px">
-        <CategoryDetail :title="detailTitle" :links="links"></CategoryDetail>
+        <CategoryDetail
+          :id="categoryId"
+          :name="name"
+          :detailName="detailName"
+          :links="links"
+          @refreshCategory="refreshCategory"
+        ></CategoryDetail>
       </v-col>
     </v-row>
   </div>
@@ -21,13 +27,20 @@ export default {
     CategoryDetail
   },
   data: () => ({
-    detailTitle: "",
-    links: []
+    name: "",
+    detailName: "",
+    links: [],
+    categoryId: ""
   }),
   methods: {
     loadDetail(data) {
-      this.detailTitle = data.name;
+      this.name = data.name;
+      this.detailName = data.detailName;
+      this.categoryId = data.id;
       this.links = data.links;
+    },
+    refreshCategory(id) {
+      this.$refs.CategoryList.loadCategory(id);
     }
   }
 };

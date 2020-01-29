@@ -2,7 +2,6 @@ import Vue from 'vue'
 import App from './App.vue'
 import router from './router'
 import vuetify from './plugins/vuetify';
-import axios from 'axios'
 import Vuex from 'vuex'
 import { store } from './store/index';
 
@@ -13,9 +12,8 @@ import CommonJs from '@/utils/common.js'
 import MessageJs from '@/constants/message.js'
 import ColorJs from '@/constants/color.js'
 import Snackbar from '@/components/common/snackbar/snackbar.js'
- 
+
 Vue.prototype.$snackbar = Snackbar;
-Vue.prototype.$axios = axios //全局注册，使用方法为:this.$axios
 Vue.config.productionTip = false
 Vue.use(Vuex);
 Vue.use(CommonJs);

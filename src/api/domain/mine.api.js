@@ -19,3 +19,6 @@ export const getTitleByUrl = params => { return axios.get("/lch/link/getTitleByU
 
 // 添加分类
 export const addCategory = params => { return axios.post("/lch/category/addCategory", params) }
+
+// 编辑分类
+export const updateCategory = params => { return axios.post("/lch/category/updateCategory", params) }

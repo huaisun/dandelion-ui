@@ -54,21 +54,29 @@ export default {
   },
   data: () => ({
     categorys: [],
-    addCategoryDialog: false,
+    addCategoryDialog: false
   }),
   created() {
     this.loadCategory();
   },
   methods: {
     /**加载分类列表 */
-    loadCategory() {
+    loadCategory(id) {
       getCategoryByDomain({
         domain: this.$store.state.domain.user.domain
       }).then(res => {
         if (res.data.code === 0) {
           this.categorys = res.data.data;
           if (this.categorys != null && this.categorys.length > 0) {
-            this.loadDetail(res.data.data[0]);
+            if (id == null || id == undefined) {
+              this.loadDetail(res.data.data[0]);
+            } else {
+              res.data.data.map(item => {
+                if(item.id === id) {
+                  this.loadDetail(item);
+                }
+              })
+            }
           }
         } else {
           this.$snackbar.error(res.data.message);
@@ -85,7 +93,8 @@ export default {
     },
     closeDialog() {
       this.addCategoryDialog = false;
-    }, 
+    },
+    /**刷新分类加载 */
     refreshCategory() {
       this.addCategoryDialog = false;
       this.loadCategory();

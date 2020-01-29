@@ -4,6 +4,9 @@ const actions = {
     },
     putUserDomain(state, v) {
         state.commit('SET_USER_DOMAIN', v);
+    },
+    putCategoryForm(state, v) {
+        state.commit('SET_CATEGORY_FORM', v);
     }
 }
 

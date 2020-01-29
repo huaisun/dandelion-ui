@@ -4,6 +4,9 @@ const mutations = {
     },
     SET_USER_DOMAIN(state, v) {
         state.user.domain = v;
+    },
+    SET_CATEGORY_FORM(state, v) {
+        state.category.form = v;
     }
 }
 
