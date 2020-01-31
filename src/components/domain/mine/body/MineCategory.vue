@@ -41,7 +41,7 @@ export default {
     },
     refreshCategory(id) {
       this.$refs.CategoryList.loadCategory(id);
-    }
+    },
   }
 };
 </script>

@@ -22,3 +22,6 @@ export const addCategory = params => { return axios.post("/lch/category/addCateg
 
 // 编辑分类
 export const updateCategory = params => { return axios.post("/lch/category/updateCategory", params) }
+
+// 添加分类链接
+export const addCategoryLink = params => { return axios.post("/lch/category/addCategoryLink", params) }

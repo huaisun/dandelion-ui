@@ -1,7 +1,7 @@
 <template>
-  <v-card dark class="category category-1">
+  <v-card dark class="category category-2">
     <v-card-title>
-      <span class="headline">最喜爱链接</span>
+      <span class="headline">分类下的链接</span>
     </v-card-title>
     <v-card-text>
       <v-container>
@@ -14,7 +14,7 @@
           </v-col>
         </v-row>
       </v-container>
-      <small style="color: #F44336">*收藏到你的最爱</small>
+      <small style="color: #F44336">*收藏到{{category}}分类</small>
     </v-card-text>
     <v-card-actions>
       <v-spacer></v-spacer>
@@ -25,9 +25,10 @@
 </template>
 
 <script>
-import { saveLoveLink, getTitleByUrl } from "@/api/domain/mine.api.js";
+import { addCategoryLink, getTitleByUrl } from "@/api/domain/mine.api.js";
 export default {
   name: "AddLink",
+  props: ["category", "id"],
   data: () => ({
     url: "",
     name: ""
@@ -47,13 +48,14 @@ export default {
         this.$snackbar.warning(this.ADD_LOVE_ERROR);
       } else {
         if (this.url.indexOf("http") == 0) {
-          saveLoveLink({
+          addCategoryLink({
+            categoryId: this.id,
             url: this.url,
             name: this.name,
             userId: user.id
           }).then(res => {
             if (res.data.code === 0) {
-              this.closeDialog();
+              this.$emit("refresh")
             } else {
               this.$snackbar.error(res.data.message);
             }
