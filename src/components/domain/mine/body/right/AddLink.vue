@@ -34,11 +34,14 @@ export default {
     name: ""
   }),
   methods: {
+    initForm() {
+      this.url = "";
+      this.name = "";
+    },
     /**关闭弹出框 */
     closeDialog() {
       this.$emit("closeDialog");
-      this.url = "";
-      this.name = "";
+      this.initForm();
     },
     /**保存 */
     saveUrl() {
@@ -55,7 +58,8 @@ export default {
             userId: user.id
           }).then(res => {
             if (res.data.code === 0) {
-              this.$emit("refresh")
+              this.$emit("refresh");
+              this.initForm();
             } else {
               this.$snackbar.error(res.data.message);
             }

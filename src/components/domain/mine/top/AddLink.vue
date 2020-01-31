@@ -1,5 +1,5 @@
 <template>
-  <v-card dark class="category category-1">
+  <v-card dark class="category category-2">
     <v-card-title>
       <span class="headline">最喜爱链接</span>
     </v-card-title>
