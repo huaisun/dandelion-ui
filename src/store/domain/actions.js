@@ -7,6 +7,9 @@ const actions = {
     },
     putCategoryForm(state, v) {
         state.commit('SET_CATEGORY_FORM', v);
+    },
+    putLinkForm(state, v) {
+        state.commit('SET_LINK_FORM', v);
     }
 }
 

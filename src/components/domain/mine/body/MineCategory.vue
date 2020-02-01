@@ -11,6 +11,7 @@
           :detailName="detailName"
           :links="links"
           @refreshCategory="refreshCategory"
+          @refreshLoveLink="refreshLoveLink"
         ></CategoryDetail>
       </v-col>
     </v-row>
@@ -42,6 +43,9 @@ export default {
     refreshCategory(id) {
       this.$refs.CategoryList.loadCategory(id);
     },
+    refreshLoveLink() {
+      this.$emit("refreshLoveLink");
+    }
   }
 };
 </script>

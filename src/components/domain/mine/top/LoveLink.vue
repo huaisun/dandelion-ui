@@ -10,7 +10,7 @@
                 v-show="$store.state.domain.authority.edit"
                 style="height: 47px; width: 47px;"
                 v-on="on"
-                color="purple"
+                color="white"
                 icon
               >
                 <v-icon>more_vert</v-icon>

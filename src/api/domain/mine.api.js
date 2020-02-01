@@ -20,8 +20,17 @@ export const getTitleByUrl = params => { return axios.get("/lch/link/getTitleByU
 // 添加分类
 export const addCategory = params => { return axios.post("/lch/category/addCategory", params) }
 
-// 编辑分类
+// 更新分类
 export const updateCategory = params => { return axios.post("/lch/category/updateCategory", params) }
+
+// 删除分类
+export const deleteCategory = params => { return axios.delete("/lch/category/deleteCategory", { params }) }
 
 // 添加分类链接
 export const addCategoryLink = params => { return axios.post("/lch/category/addCategoryLink", params) }
+
+// 删除分类链接
+export const deleteCategoryLink = params => { return axios.delete("/lch/category/deleteLink", { params }) }
+
+// 更新分类链接
+export const updateCategoryLink = params => { return axios.post("/lch/category/updateCategoryLink", params) }

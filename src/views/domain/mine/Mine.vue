@@ -1,7 +1,7 @@
 <template>
   <div style="height: 100%">
     <LoveLink ref="love_link_ref"></LoveLink>
-    <MineCategory></MineCategory>
+    <MineCategory @refreshLoveLink="refreshLoveLink"></MineCategory>
   </div>
 </template>
 
@@ -39,6 +39,10 @@ export default {
       } else {
         this.putUserDomain(sPath.slice(0, sPath.indexOf("/")));
       }
+    },
+    /**刷新喜爱链接 */
+    refreshLoveLink() {
+      this.$refs.love_link_ref.loadLoveLink();
     }
   }
 };

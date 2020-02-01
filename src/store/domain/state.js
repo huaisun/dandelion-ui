@@ -14,6 +14,22 @@ const state = {
         color: 'error',
         com: 'delete',
     }],
+    categroyLinkMenu: [{
+        icon: 'favorite',
+        text: '收藏',
+        color: 'success',
+        com: 'add',
+    }, {
+        icon: 'delete_forever',
+        text: '删除',
+        color: 'error',
+        com: 'delete',
+    }, {
+        icon: 'bubble_chart',
+        text: '编辑',
+        color: 'warning',
+        com: 'edit',
+    }],
     user: {
         domain: '',
     },
@@ -21,6 +37,12 @@ const state = {
         form: {
             name: '',
             detailName: ''
+        }
+    },
+    link: {
+        form: {
+            url: '',
+            name: ''
         }
     }
 }

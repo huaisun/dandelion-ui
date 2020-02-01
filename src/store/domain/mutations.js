@@ -7,6 +7,9 @@ const mutations = {
     },
     SET_CATEGORY_FORM(state, v) {
         state.category.form = v;
+    },
+    SET_LINK_FORM(state, v) {
+        state.link.form = v;
     }
 }
 
