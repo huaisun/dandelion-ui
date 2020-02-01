@@ -20,4 +20,7 @@ export default function install(_Vue) {
     _Vue.prototype.INCORRECT_PASSWORD = "密码不一致";
 
     _Vue.prototype.INCORRECT_LINK = "链接需要加入http或者https网络协议";
+
+    _Vue.prototype.COLLECT_SUCCESS = "收藏成功";
+    _Vue.prototype.ALREADY_COLLECT = "已经收藏";
 }

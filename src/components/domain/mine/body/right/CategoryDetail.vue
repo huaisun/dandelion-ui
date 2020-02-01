@@ -98,7 +98,8 @@ import { mapActions } from "vuex";
 import {
   deleteCategoryLink,
   saveLoveLink,
-  deleteCategory
+  deleteCategory,
+  addCategoryUser
 } from "@/api/domain/mine.api.js";
 
 export default {
@@ -133,6 +134,14 @@ export default {
     handleCategory(com) {
       if (com === "add") {
         // 添加收藏
+        let user = JSON.parse(localStorage.getItem("user"));
+        addCategoryUser({id: this.id, userId: user.id}).then(res => {
+          if (res.data.code === 0) {
+            this.$snackbar.success(this.COLLECT_SUCCESS);
+          } else {
+            this.$snackbar.error(res.data.message);
+          }
+        });
       } else if (com === "delete") {
         // 进行删除分类
         deleteCategory({ categoryId: this.id }).then(res => {

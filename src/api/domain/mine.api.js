@@ -34,3 +34,6 @@ export const deleteCategoryLink = params => { return axios.delete("/lch/category
 
 // 更新分类链接
 export const updateCategoryLink = params => { return axios.post("/lch/category/updateCategoryLink", params) }
+
+// 收藏分类
+export const addCategoryUser = params => { return axios.post("/lch/category/addCategoryUser", params) }
