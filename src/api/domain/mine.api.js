@@ -1,4 +1,4 @@
-/** home的访问接口 */
+/** mine的访问接口 */
 
 import axios from 'axios'
 

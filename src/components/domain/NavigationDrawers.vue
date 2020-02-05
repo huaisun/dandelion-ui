@@ -31,7 +31,13 @@
 
       <v-divider></v-divider>
 
-      <v-list-item v-for="item in items" :key="item.title" link v-show="user != null || item.show">
+      <v-list-item
+        v-for="item in items"
+        :key="item.title"
+        link
+        v-show="user != null || item.show"
+        @click="routerClick(item.name)"
+      >
         <v-list-item-icon>
           <v-icon>{{ item.icon }}</v-icon>
         </v-list-item-icon>
@@ -52,10 +58,20 @@ export default {
     return {
       drawer: true,
       items: [
-        { title: "我的", icon: "face", show: false },
-        { title: "收藏", icon: "cloud_download", show: false },
-        { title: "排行榜", icon: "equalizer", show: true },
-        { title: "本地导入", icon: "cloud_upload", show: false }
+        { title: "我的", icon: "face", show: false, name: "" },
+        {
+          title: "收藏",
+          icon: "cloud_download",
+          show: false,
+          name: "/collect"
+        },
+        {
+          title: "排行榜",
+          icon: "equalizer",
+          show: true,
+          name: "/leaderboard"
+        },
+        { title: "本地导入", icon: "cloud_upload", show: false, name: "/local" }
       ],
       user: JSON.parse(localStorage.getItem("user")),
       userImage: DefaultJpg,
@@ -84,6 +100,11 @@ export default {
     // 注册
     signUp() {
       this.$router.push({ name: "Sign", params: { sign: false } });
+    },
+    routerClick(name) {
+      this.$router.push({
+        path: "/" + this.$store.state.domain.user.domain + name
+      });
     }
   }
 };

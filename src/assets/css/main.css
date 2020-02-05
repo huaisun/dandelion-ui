@@ -79,11 +79,11 @@ body {
 }
 
 .category-1 {
-    background-image: linear-gradient( to right, #a1c4fd 0%, #c2e9fb 51%, #a1c4fd 100%);
+    background-image: linear-gradient( to right, #77A1D3 0%, #79CBCA 51%, #E684AE 100%);
 }
 
 .category-2 {
-    background-image: linear-gradient(to right, #1867c0, #5CBBF6)
+    background-image: linear-gradient(to right, #77A1D3, #79CBCA)
 }
 
 .category:hover {

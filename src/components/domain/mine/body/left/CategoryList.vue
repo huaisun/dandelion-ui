@@ -29,7 +29,7 @@
         link
         @click="loadDetail(item)"
       >
-        <v-list-item-icon v-text="item.name.slice(0,1)" style="font-size: 18px;"></v-list-item-icon>
+        <v-list-item-icon v-text="item.name.slice(0,1).toUpperCase()" style="font-size: 18px;"></v-list-item-icon>
 
         <v-list-item-content>
           <v-list-item-title>

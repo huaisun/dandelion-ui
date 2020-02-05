@@ -1,7 +1,7 @@
 <template>
   <div>
     <!-- 用户最喜爱的网站标题 -->
-    <v-card class="mx-auto category category-2" tile min-height="76">
+    <v-card class="mx-auto category category-1" tile min-height="76">
       <v-card-text>
         <v-row style="padding: 0 10px">
           <v-menu offset-y>

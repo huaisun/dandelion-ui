@@ -23,4 +23,6 @@ export default function install(_Vue) {
 
     _Vue.prototype.COLLECT_SUCCESS = "收藏成功";
     _Vue.prototype.ALREADY_COLLECT = "已经收藏";
+
+    _Vue.prototype.DELETE_COLLECT_SUCCESS = "取消收藏成功";
 }

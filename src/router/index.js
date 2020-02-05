@@ -8,6 +8,9 @@ import Home from '../views/home/Home'
 // 入口
 import Entrance from '../views/domain/Entrance'
 import Mine from '../views/domain/mine/Mine'
+import Collect from '../views/domain/collect/Collect'
+import Leaderboard from '../views/domain/leaderboard/Leaderboard'
+import LocalUpload from '../views/domain/local/LocalUpload'
 
 // 404
 import FourZeroFour from '../views/com/404'
@@ -33,13 +36,23 @@ const routes = [{
 }, {
     path: '/:domain',
     component: Entrance,
-    children: [
-        {
-            path: '/',
-            name: 'mine',
-            component: Mine,
-        }
-    ]
+    children: [{
+        path: '',
+        name: 'mine',
+        component: Mine,
+    }, {
+        path: 'collect',
+        name: 'collect',
+        component: Collect
+    }, {
+        path: 'leaderboard',
+        name: 'leaderboard',
+        component: Leaderboard
+    }, {
+        path: 'local',
+        name: 'local',
+        component: LocalUpload
+    }]
 }, {
     path: '*',
     name: '404',
