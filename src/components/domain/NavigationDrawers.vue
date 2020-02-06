@@ -65,12 +65,12 @@ export default {
           show: false,
           name: "/collect"
         },
-        {
-          title: "排行榜",
-          icon: "equalizer",
-          show: true,
-          name: "/leaderboard"
-        },
+        // {
+        //   title: "排行榜",
+        //   icon: "equalizer",
+        //   show: true,
+        //   name: "/leaderboard"
+        // },
         { title: "本地导入", icon: "cloud_upload", show: false, name: "/local" }
       ],
       user: JSON.parse(localStorage.getItem("user")),

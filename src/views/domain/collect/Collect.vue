@@ -14,7 +14,12 @@
       </v-list-item>
 
       <v-card-actions>
-        <v-btn text>查看</v-btn>
+        <v-dialog v-model="showDialog" width="600px">
+          <template v-slot:activator="{ on }">
+            <v-btn text v-on="on">查看</v-btn>
+          </template>
+          <LinksDialog :title="item.name" :links="item.links" @closeDialog="closeLinksDialog"></LinksDialog>
+        </v-dialog>
         <v-dialog v-model="tipDialog" persistent max-width="390">
           <template v-slot:activator="{ on }">
             <v-btn text v-on="on">取消收藏</v-btn>
@@ -35,13 +40,21 @@
 </template>
 
 <script>
-import { getCollectCategory,deleteCollectCategory } from "@/api/collect/collect.api.js";
+import {
+  getCollectCategory,
+  deleteCollectCategory
+} from "@/api/collect/collect.api.js";
+import LinksDialog from "@/components/collect/LinksDialog";
 
 export default {
   name: "Collect",
+  components: {
+    LinksDialog
+  },
   data: () => ({
     categorys: [],
-    tipDialog: false
+    tipDialog: false,
+    showDialog: false
   }),
   created() {
     this.loadCollectCategorys();
@@ -59,14 +72,20 @@ export default {
     deleteCollect(data) {
       this.tipDialog = false;
       let user = JSON.parse(localStorage.getItem("user"));
-      deleteCollectCategory({userId: user.id, categoryId: data.id}).then(res => {
-        if(res.data.code === 0) {
-          this.loadCollectCategorys();
-          this.$snackbar.success(this.DELETE_COLLECT_SUCCESS);
-        } else {
-          this.$snackbar.error(this.res.data.message);
+      deleteCollectCategory({ userId: user.id, categoryId: data.id }).then(
+        res => {
+          if (res.data.code === 0) {
+            this.loadCollectCategorys();
+            this.$snackbar.success(this.DELETE_COLLECT_SUCCESS);
+          } else {
+            this.$snackbar.error(this.res.data.message);
+          }
         }
-      })
+      );
+    },
+    /**关闭 */
+    closeLinksDialog() {
+      this.showDialog = false;
     }
   }
 };
