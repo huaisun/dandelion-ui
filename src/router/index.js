@@ -41,7 +41,7 @@ const routes = [{
         name: 'mine',
         component: Mine,
     }, {
-        path: 'collect',
+        path: '/collect',
         name: 'collect',
         component: Collect
     }, {
@@ -49,7 +49,7 @@ const routes = [{
         name: 'leaderboard',
         component: Leaderboard
     }, {
-        path: 'local',
+        path: '/local',
         name: 'local',
         component: LocalUpload
     }]

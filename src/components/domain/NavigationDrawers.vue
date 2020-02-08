@@ -63,7 +63,7 @@ export default {
           title: "收藏",
           icon: "cloud_download",
           show: false,
-          name: "/collect"
+          name: "collect"
         },
         // {
         //   title: "排行榜",
@@ -71,7 +71,7 @@ export default {
         //   show: true,
         //   name: "/leaderboard"
         // },
-        { title: "本地导入", icon: "cloud_upload", show: false, name: "/local" }
+        { title: "本地导入", icon: "cloud_upload", show: false, name: "local" }
       ],
       user: JSON.parse(localStorage.getItem("user")),
       userImage: DefaultJpg,
@@ -80,7 +80,7 @@ export default {
   },
   created() {
     // 加载用户图像
-    this.loadImage();
+    // this.loadImage();
   },
   methods: {
     // 加载用户图像
@@ -102,9 +102,11 @@ export default {
       this.$router.push({ name: "Sign", params: { sign: false } });
     },
     routerClick(name) {
-      this.$router.push({
-        path: "/" + this.$store.state.domain.user.domain + name
-      });
+      if (name) {
+        this.$router.push({ name });
+      } else {
+        this.$router.push({ path: "/" + this.$store.state.domain.user.domain });
+      }
     }
   }
 };
