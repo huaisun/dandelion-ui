@@ -1,7 +1,23 @@
 <template>
   <div style="height: 100%">
-    <LoveLink ref="love_link_ref"></LoveLink>
-    <MineCategory @refreshLoveLink="refreshLoveLink"></MineCategory>
+    <div class="left">
+      <MineCategory @refreshLoveLink="refreshLoveLink"></MineCategory>
+    </div>
+    <div class="right">
+      <v-list dense nav class="py-0 avator-background">
+        <v-list-item two-line>
+          <v-list-item-avatar size="64">
+            <img :src="userImage" />
+          </v-list-item-avatar>
+
+          <v-list-item-content>
+            <v-list-item-title>huaisun</v-list-item-title>
+            <v-list-item-subtitle>ruiguangsun</v-list-item-subtitle>
+          </v-list-item-content>
+        </v-list-item>
+      </v-list>
+      <LoveLink></LoveLink>
+    </div>
   </div>
 </template>
 
@@ -9,6 +25,7 @@
 import LoveLink from "@/components/domain/mine/top/LoveLink";
 import MineCategory from "@/components/domain/mine/body/MineCategory";
 import { mapActions } from "vuex";
+import DefaultJpg from "@/assets/photos/default.jpg";
 
 export default {
   name: "Mine",
@@ -16,6 +33,9 @@ export default {
     LoveLink,
     MineCategory
   },
+  data: () => ({
+    userImage: DefaultJpg
+  }),
   created() {
     this.checkDomain();
   },
@@ -47,3 +67,25 @@ export default {
   }
 };
 </script>
+
+<style scoped>
+.right {
+  margin-bottom: 30px;
+  padding: 0;
+  max-width: 293px;
+  position: absolute;
+  right: 0;
+  width: 100%;
+}
+
+.left {
+  float: left;
+  margin-right: 28px;
+  max-width: 614px;
+  width: 100%;
+}
+
+.avator-background {
+  background-color: transparent !important;
+}
+</style>

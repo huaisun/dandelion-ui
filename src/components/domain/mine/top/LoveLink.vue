@@ -1,70 +1,54 @@
 <template>
-  <div>
-    <!-- 用户最喜爱的网站标题 -->
-    <v-card class="mx-auto category category-1" tile min-height="76">
-      <v-card-text>
-        <v-row style="padding: 0 10px">
-          <v-menu offset-y>
-            <template v-slot:activator="{ on }">
-              <v-btn
-                v-show="$store.state.domain.authority.edit"
-                style="height: 47px; width: 47px;"
-                v-on="on"
-                color="white"
-                icon
-              >
-                <v-icon>more_vert</v-icon>
+  <v-card class="mx-auto" max-width="400">
+    <v-list-item>
+      <v-list-item-content>
+        <v-list-item-subtitle>
+          <span>喜欢</span>
+          <span style="float: right">
+            <div v-if="editFlag">
+              <v-btn small icon @click="successEdit">
+                <v-icon color="success">done</v-icon>
               </v-btn>
-            </template>
-            <v-list dense>
-              <v-list-item
-                v-for="(item, index) in $store.state.domain.loveLinkMenus"
-                :key="index"
-                @click="handleLove(item.com)"
-              >
-                <v-list-item-icon>
-                  <v-icon v-text="item.icon" :color="item.color"></v-icon>
-                </v-list-item-icon>
-                <v-list-item-content>
-                  <v-list-item-title v-text="item.text" :color="item.color"></v-list-item-title>
-                </v-list-item-content>
-              </v-list-item>
-            </v-list>
-          </v-menu>
-          <v-chip-group multiple column active-class="primary--text" class="chip-links">
-            <v-chip
-              v-for="(tag, index) in links"
-              :close="editFlag"
-              :key="tag.id"
-              :color="$store.state.domain.colors[index % 7]"
-              class="link-tag"
-              @click:close="closeClick(tag)"
-              @click="linkClik(tag)"
-            >
-              <div left class="avator-ico">
-                <img :src="tag.ico != null ? 'data:image/png;base64,' + tag.ico: ''" />
-              </div>
-              <div class="link-name">{{ tag.name }}</div>
-            </v-chip>
+              <v-btn small icon @click="cancelEdit">
+                <v-icon color="error">close</v-icon>
+              </v-btn>
+            </div>
+            <div v-else>
+              <v-btn small icon @click="addLove">
+                <v-icon color="red">favorite</v-icon>
+              </v-btn>
+              <v-btn small icon @click="deleteLove">
+                <v-icon color="grey">delete_outline</v-icon>
+              </v-btn>
+            </div>
+          </span>
+        </v-list-item-subtitle>
+      </v-list-item-content>
+    </v-list-item>
 
-            <v-chip v-show="editFlag" color="success" outlined @click="successEdit">
-              <v-btn color="success" text @click="successEdit">
-                <v-icon>done</v-icon>完成
-              </v-btn>
-            </v-chip>
-            <v-chip v-show="editFlag" color="error" outlined @click="cancelEdit">
-              <v-btn color="error" text @click="cancelEdit">
-                <v-icon>close</v-icon>取消
-              </v-btn>
-            </v-chip>
-          </v-chip-group>
-        </v-row>
-      </v-card-text>
-    </v-card>
+    <v-card-text>
+      <v-chip-group multiple column active-class="primary--text">
+        <v-chip
+          v-for="(tag, index) in links"
+          :close="editFlag"
+          :key="tag.id"
+          label
+          :color="$store.state.domain.colors[index % 7]"
+          class="link-tag"
+          @click:close="closeClick(tag)"
+          @click="linkClik(tag)"
+        >
+          <div left class="avator-ico">
+            <img :src="tag.ico != null ? 'data:image/png;base64,' + tag.ico: ''" />
+          </div>
+          <div class="link-name">{{ tag.name }}</div>
+        </v-chip>
+      </v-chip-group>
+    </v-card-text>
     <v-dialog v-model="addLinkDialog" max-width="600" data-app="true">
       <AddLink @closeDialog="closeLinkDialog"></AddLink>
     </v-dialog>
-  </div>
+  </v-card>
 </template>
 <script>
 import {
@@ -84,7 +68,7 @@ export default {
     // 是否处于编辑状态
     editFlag: false,
     links: [],
-    removeLink: [],
+    removeLink: []
   }),
   created() {
     // 初始化加载用户收藏数据
@@ -93,12 +77,11 @@ export default {
 
   methods: {
     /**进行操作处理 */
-    handleLove(com) {
-      if (com === "add") {
-        this.addLinkDialog = true;
-      } else if (com === "delete") {
-        this.editFlag = true;
-      }
+    addLove() {
+      this.addLinkDialog = true;
+    },
+    deleteLove() {
+      this.editFlag = true;
     },
     /**关闭弹出框 */
     closeLinkDialog() {
@@ -185,9 +168,5 @@ export default {
   text-overflow: ellipsis;
   color: white;
   white-space: nowrap;
-}
-
-.chip-links {
-  padding-right: 80px;
 }
 </style>

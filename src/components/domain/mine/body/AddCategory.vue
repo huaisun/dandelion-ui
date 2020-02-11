@@ -1,5 +1,5 @@
 <template>
-  <v-card dark>
+  <v-card>
     <v-card-title>
       <span class="headline">添加分类</span>
     </v-card-title>
