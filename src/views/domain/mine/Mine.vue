@@ -1,7 +1,7 @@
 <template>
   <div style="height: 100%">
     <div class="left">
-      <MineCategory @refreshLoveLink="refreshLoveLink"></MineCategory>
+      <MineCategory @refreshLoveLink="refreshLoveLink" @refreshCollect="refreshCollect"></MineCategory>
     </div>
     <div class="right">
       <v-list dense nav class="py-0 avator-background">
@@ -63,6 +63,9 @@ export default {
     /**刷新喜爱链接 */
     refreshLoveLink() {
       this.$refs.love_link_ref.loadLoveLink();
+    },
+    refreshCollect(){
+      this.$emit("refreshCollect");
     }
   }
 };

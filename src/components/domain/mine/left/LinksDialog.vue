@@ -12,7 +12,7 @@
         v-if="category.links.length == 1 && category.links[0].id == null"
       ></v-list>
       <v-list v-else>
-        <v-list-item v-for="(item, i) in category.links" :key="i" @click="console.log()">
+        <v-list-item v-for="(item, i) in category.links" :key="i" @click="cardClick">
           <v-list-item-icon @click="urlClick(item)">
             <img style="height: 24px; width: 24px;" :src="'data:image/png;base64,' + item.ico" />
           </v-list-item-icon>
@@ -72,7 +72,7 @@
         :id="category.id"
         :linkId="linkId"
         @closeDialog="closeInnerDialog"
-        @refresh="refreshLink"
+        @refresh="refreshCategory"
       ></EditLink>
     </v-dialog>
   </v-card>
@@ -104,6 +104,7 @@ export default {
     editLinkDialog: false
   }),
   methods: {
+    cardClick(){},
     /**注册store方法 */
     ...mapActions("domain", ["putCategoryForm", "putLinkForm"]),
     closeDialog() {
@@ -134,6 +135,7 @@ export default {
       let user = JSON.parse(localStorage.getItem("user"));
       addCategoryUser({ id: this.category.id, userId: user.id }).then(res => {
         if (res.data.code === 0) {
+          this.$emit("refreshCollect")
           this.$snackbar.success(this.COLLECT_SUCCESS);
         } else {
           this.$snackbar.error(res.data.message);

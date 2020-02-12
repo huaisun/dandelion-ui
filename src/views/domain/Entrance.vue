@@ -4,14 +4,11 @@
       <v-app-bar fixed>
         <div id="app-bar" class="mx-auto">
           <div style="display: inline;">
-            <v-btn x-large icon>
-              <v-icon color="#000">pets</v-icon>
-            </v-btn>
-            <v-btn style="padding: 0; margin-right: 50px;" text>
+            <v-btn style="padding: 0; margin-right: 50px; height: 48px" text>
               <img class="img-lch" src="../../assets/photos/lch.png" />
             </v-btn>
           </div>
-          <div style="display: inline;">
+          <div style="display: inline; width: 900px">
             <v-tabs v-model="tab">
               <v-tab
                 v-for="(item, index) in items"
@@ -26,11 +23,12 @@
     </div>
     <v-content>
       <div class="main-content mx-auto">
-        <v-tabs-items v-model="tab">
+        <v-tabs-items class="tab-item-background" v-model="tab">
           <v-tab-item value="mine">
-            <v-card flat>
-              <Mine></Mine>
-            </v-card>
+            <Mine @refreshCollect="refreshCollect"></Mine>
+          </v-tab-item>
+          <v-tab-item value="collect">
+            <Collect ref="collect"></Collect>
           </v-tab-item>
         </v-tabs-items>
       </div>
@@ -39,11 +37,13 @@
 </template>
 <script>
 import Mine from "./mine/Mine";
+import Collect from "./collect/Collect";
 
 export default {
   name: "Entrance",
   components: {
-    Mine
+    Mine,
+    Collect
   },
   data: () => ({
     domain: "",
@@ -57,7 +57,11 @@ export default {
   created() {
     // 配置网页域名规则
   },
-  methods: {}
+  methods: {
+    refreshCollect(){
+      this.$refs.collect.loadCollectCategorys();
+    }
+  }
 };
 </script>
 
@@ -73,5 +77,9 @@ export default {
 .main-content {
   padding-top: 100px;
   max-width: 935px;
+}
+
+.tab-item-background{
+  background-color: transparent !important;
 }
 </style>

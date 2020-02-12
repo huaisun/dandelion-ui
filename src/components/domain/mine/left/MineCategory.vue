@@ -1,7 +1,7 @@
 <template>
   <v-row dense>
     <v-col cols="6">
-      <v-card dark @click="addCategory">
+      <v-card dark color="#952175" @click="addCategory">
         <div class="d-flex flex-no-wrap justify-space-between">
           <div>
             <v-card-title class="headline">添加分类</v-card-title>
@@ -19,7 +19,7 @@
             <v-card-title class="headline" v-text="item.name"></v-card-title>
             <v-card-subtitle v-text="item.detailName"></v-card-subtitle>
           </div>
-          <v-avatar class="ma-3" size="75" tile>
+          <v-avatar color="grey" class="ma-3" size="75" tile>
             <v-icon v-text="item.name.slice(0,1).toUpperCase()"></v-icon>
           </v-avatar>
         </div>
@@ -34,6 +34,7 @@
         @closeDialog="closeDialog"
         @refreshCategory="refreshCategory"
         @refreshLoveLink="refreshLoveLink"
+        @refreshCollect="refreshCollect"
       ></LinksDialog>
     </v-dialog>
   </v-row>
@@ -77,6 +78,10 @@ export default {
           this.$snackbar.error(res.data.message);
         }
       });
+    },
+    /**刷新收藏 */
+    refreshCollect(){
+      this.$emit("refreshCollect")
     },
     refreshLoveLink() {
       this.$emit("refreshLoveLink");
