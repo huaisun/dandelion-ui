@@ -13,7 +13,7 @@
       </v-card>
     </v-col>
     <v-col v-for="(item, i) in categorys" :key="i" cols="6">
-      <v-card @click="categoryClick">
+      <v-card @click="categoryClick(item)">
         <div class="d-flex flex-no-wrap justify-space-between">
           <div>
             <v-card-title class="headline" v-text="item.name"></v-card-title>
@@ -28,32 +28,51 @@
     <v-dialog v-model="addCategoryDialog" max-width="600" data-app="true">
       <AddCategory @closeDialog="closeDialog" @refresh="refreshCategory"></AddCategory>
     </v-dialog>
+    <v-dialog v-model="linksDialog" max-width="600" data-app="true">
+      <LinksDialog
+        :category="category"
+        @closeDialog="closeDialog"
+        @refreshCategory="refreshCategory"
+        @refreshLoveLink="refreshLoveLink"
+      ></LinksDialog>
+    </v-dialog>
   </v-row>
 </template>
 <script>
 import AddCategory from "./AddCategory";
 import { getCategoryByDomain } from "@/api/domain/mine.api.js";
+import LinksDialog from "./LinksDialog";
 
 export default {
   name: "MineCategory",
   components: {
-    AddCategory
+    AddCategory,
+    LinksDialog
   },
   data: () => ({
     categorys: [],
-    addCategoryDialog: false
+    addCategoryDialog: false,
+    category: null,
+    linksDialog: false
   }),
   created() {
     this.loadCategory();
   },
   methods: {
     /**加载分类列表 */
-    loadCategory() {
+    loadCategory(val) {
       getCategoryByDomain({
         domain: this.$store.state.domain.user.domain
       }).then(res => {
         if (res.data.code === 0) {
           this.categorys = res.data.data;
+          if(val != null && val != undefined) {
+            res.data.data.map(item => {
+              if(item.id === val) {
+                this.categoryClick(item);
+              }
+            })
+          }
         } else {
           this.$snackbar.error(res.data.message);
         }
@@ -66,15 +85,18 @@ export default {
     addCategory() {
       this.addCategoryDialog = true;
     },
+    categoryClick(data) {
+      this.category = data;
+      this.linksDialog = true;
+    },
     closeDialog() {
+      this.linksDialog = false;
       this.addCategoryDialog = false;
     },
-    refreshCategory() {
-      this.addCategoryDialog = false;
-      this.loadCategory();
-    },
-    /** 分类点击展示 */
-    categoryClick() {}
+    refreshCategory(val) {
+      this.closeDialog();
+      this.loadCategory(val);
+    }
   }
 };
 </script>

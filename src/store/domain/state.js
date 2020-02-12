@@ -3,26 +3,15 @@ const state = {
         edit: false,
     },
     colors: ['indigo', 'orange', 'primary', 'green', 'teal', 'pink', 'cyan'],
-    loveLinkMenus: [{
-        icon: 'add_circle',
-        text: '添加喜欢',
-        color: 'success',
-        com: 'add',
-    }, {
-        icon: 'delete_forever',
-        text: '回收处理',
-        color: 'error',
-        com: 'delete',
-    }],
     categroyLinkMenu: [{
         icon: 'favorite',
         text: '收藏',
-        color: 'success',
+        color: 'error',
         com: 'add',
     }, {
         icon: 'delete_forever',
         text: '删除',
-        color: 'error',
+        color: 'info',
         com: 'delete',
     }, {
         icon: 'bubble_chart',

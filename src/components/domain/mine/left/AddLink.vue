@@ -1,5 +1,5 @@
 <template>
-  <v-card dark class="category category-2">
+  <v-card>
     <v-card-title>
       <span class="headline">分类下的链接</span>
     </v-card-title>
@@ -7,31 +7,41 @@
       <v-container>
         <v-row>
           <v-col cols="12">
-            <v-text-field v-model="url" label="链接*" required @change="urlChange"></v-text-field>
+            <v-text-field v-model="url" label="链接*" required></v-text-field>
           </v-col>
           <v-col cols="12">
-            <v-text-field v-model="name" label="名称*" required></v-text-field>
+            <v-text-field v-model="name" label="名称*" required @focus="urlChange"></v-text-field>
           </v-col>
         </v-row>
       </v-container>
-      <small style="color: #F44336">*收藏到{{category}}分类</small>
+      <small style="color: #F44336">*收藏到{{category.name}}分类</small>
     </v-card-text>
     <v-card-actions>
       <v-spacer></v-spacer>
       <v-btn color="warning" text @click="closeDialog">关闭</v-btn>
       <v-btn color="success" text @click="saveUrl">保存</v-btn>
     </v-card-actions>
+    <v-dialog v-model="loadingDialog" hide-overlay persistent width="300">
+      <v-card color="primary" dark>
+        <v-card-text>
+          请稍等
+          <v-progress-linear indeterminate color="white" class="mb-0"></v-progress-linear>
+        </v-card-text>
+      </v-card>
+    </v-dialog>
   </v-card>
 </template>
 
 <script>
 import { addCategoryLink, getTitleByUrl } from "@/api/domain/mine.api.js";
+
 export default {
   name: "AddLink",
-  props: ["category", "id"],
+  props: ["category"],
   data: () => ({
     url: "",
-    name: ""
+    name: "",
+    loadingDialog: false,
   }),
   methods: {
     initForm() {
@@ -51,12 +61,14 @@ export default {
         this.$snackbar.warning(this.ADD_LOVE_ERROR);
       } else {
         if (this.url.indexOf("http") == 0) {
+          this.loadingDialog = true;
           addCategoryLink({
-            categoryId: this.id,
+            categoryId: this.category.id,
             url: this.url,
             name: this.name,
             userId: user.id
           }).then(res => {
+            this.loadingDialog = false;
             if (res.data.code === 0) {
               this.$emit("refresh");
               this.initForm();

@@ -16,14 +16,14 @@
           </v-list-item-content>
         </v-list-item>
       </v-list>
-      <LoveLink></LoveLink>
+      <LoveLink ref="love_link_ref"></LoveLink>
     </div>
   </div>
 </template>
 
 <script>
-import LoveLink from "@/components/domain/mine/top/LoveLink";
-import MineCategory from "@/components/domain/mine/body/MineCategory";
+import LoveLink from "@/components/domain/mine/right/LoveLink";
+import MineCategory from "@/components/domain/mine/left/MineCategory";
 import { mapActions } from "vuex";
 import DefaultJpg from "@/assets/photos/default.jpg";
 

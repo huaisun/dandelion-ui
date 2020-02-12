@@ -1,5 +1,5 @@
 <template>
-  <v-card dark>
+  <v-card>
     <v-card-title>
       <span class="headline">编辑分类</span>
     </v-card-title>
@@ -8,7 +8,7 @@
         <v-text-field v-model="form.name" label="分类名称*" required></v-text-field>
         <v-text-field v-model="form.detailName" label="分类详情*" required></v-text-field>
       </v-container>
-      <small style="color: #F44336">*添加自己的分类</small>
+      <small style="color: #F44336">*编辑自己的分类</small>
     </v-card-text>
     <v-card-actions>
       <v-spacer></v-spacer>
