@@ -15,9 +15,6 @@
           </div>
         </v-card>
       </v-col>
-      <v-dialog v-model="windowDialog" width="1080px">
-        <InnerDialog :flag="windowFlag" @closeDialog="closeInnerDialog"></InnerDialog>
-      </v-dialog>
     </v-row>
     <div class="right">
       <v-list>
@@ -37,24 +34,31 @@
                 :value="item.flag"
               ></v-radio>
             </v-radio-group>
-            <v-file-input show-size label="File input"></v-file-input>
-            <v-btn color="primary">
-              <v-icon>cloud_upload</v-icon>
-              上传
+            <v-file-input show-size truncate-length label="File input" @change="uploadFile"></v-file-input>
+            <v-btn color="primary" @click="uploadClick">
+              <v-icon>cloud_upload</v-icon>上传
             </v-btn>
           </v-list-item-content>
         </v-list-item>
       </v-list>
     </div>
+    <v-dialog v-model="windowDialog" width="1080px">
+      <InnerDialog :flag="windowFlag" @closeDialog="closeInnerDialog"></InnerDialog>
+    </v-dialog>
+    <v-dialog v-model="backDialog" width="750px">
+      <BackDialog :links="links"></BackDialog>
+    </v-dialog>
   </div>
 </template>
 <script>
 import Chrome from "@/assets/photos/chrome.png";
 import InnerDialog from "@/components/domain/local/InnerDialog";
+import BackDialog from "@/components/domain/local/BackDialog";
+import { uploadLocalFile } from "@/api/domain/local.api.js";
 
 export default {
   name: "Local",
-  components: { InnerDialog },
+  components: { InnerDialog, BackDialog },
   data: () => ({
     items: [
       {
@@ -66,7 +70,10 @@ export default {
     ],
     windowDialog: false,
     windowFlag: null,
-    format: ""
+    format: null,
+    file: null,
+    links: [],
+    backDialog: false,
   }),
   methods: {
     cardClick(data) {
@@ -76,6 +83,29 @@ export default {
     /**关闭 */
     closeInnerDialog() {
       this.windowDialog = false;
+    },
+    /**上传 */
+    uploadClick() {
+      if (this.format == null) {
+        this.$snackbar.warning(this.NO_EMPTY_FORMAT);
+      } else if (this.file == null) {
+        this.$snackbar.warning(this.NO_EMPTY_FILE);
+      } else {
+        let form = new FormData();
+        form.append("format", this.format);
+        form.append("file", this.file);
+        uploadLocalFile(form).then(res => {
+          if (res.data.data == null) {
+            this.$snackbar.error(this.HANDLE_ERROR);
+          } else {
+            this.links = res.data.data;
+            this.backDialog = true;
+          }
+        });
+      }
+    },
+    uploadFile(data) {
+      this.file = data;
     }
   }
 };

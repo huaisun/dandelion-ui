@@ -45,7 +45,7 @@
 import {
   getCollectCategory,
   deleteCollectCategory
-} from "@/api/collect/collect.api.js";
+} from "@/api/domain/collect.api.js";
 import LinksDialog from "@/components/collect/LinksDialog";
 
 export default {
