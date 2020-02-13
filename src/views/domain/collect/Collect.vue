@@ -1,5 +1,5 @@
 <template>
-  <v-row id="collect" dense>
+  <v-row dense>
     <v-col cols="4" v-for="(item,index) in categorys" :key="index">
       <v-card @click="cardClick">
         <v-row>
@@ -107,8 +107,5 @@ export default {
 };
 </script>
 <style scoped>
-#collect {
-  max-width: 935px;
-  margin: 0 auto;
-}
+
 </style>

@@ -30,6 +30,9 @@
           <v-tab-item value="collect">
             <Collect ref="collect"></Collect>
           </v-tab-item>
+          <v-tab-item value="local">
+            <Local></Local>
+          </v-tab-item>
         </v-tabs-items>
       </div>
     </v-content>
@@ -38,12 +41,14 @@
 <script>
 import Mine from "./mine/Mine";
 import Collect from "./collect/Collect";
+import Local from "./local/Local";
 
 export default {
   name: "Entrance",
   components: {
     Mine,
-    Collect
+    Collect,
+    Local
   },
   data: () => ({
     domain: "",
@@ -58,7 +63,7 @@ export default {
     // 配置网页域名规则
   },
   methods: {
-    refreshCollect(){
+    refreshCollect() {
       this.$refs.collect.loadCollectCategorys();
     }
   }
@@ -79,7 +84,7 @@ export default {
   max-width: 935px;
 }
 
-.tab-item-background{
+.tab-item-background {
   background-color: transparent !important;
 }
 </style>
