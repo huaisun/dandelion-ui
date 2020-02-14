@@ -1,7 +1,7 @@
 <template>
   <div>
     <v-row class="left" dense>
-      <v-col cols="6" v-for="(item,index) in items" :key="index">
+      <v-col v-for="(item,index) in items" :key="index">
         <v-card class="mx-auto" @click="cardClick(item)">
           <div class="d-flex flex-no-wrap justify-space-between">
             <v-avatar class="ma-3" size="75" tile>
@@ -30,7 +30,6 @@
                 v-for="(item, index) in items"
                 :key="index"
                 :label="item.flag"
-                color="red"
                 :value="item.flag"
               ></v-radio>
             </v-radio-group>
@@ -45,8 +44,8 @@
     <v-dialog v-model="windowDialog" width="1080px">
       <InnerDialog :flag="windowFlag" @closeDialog="closeInnerDialog"></InnerDialog>
     </v-dialog>
-    <v-dialog v-model="backDialog" width="750px">
-      <BackDialog :links="links"></BackDialog>
+    <v-dialog v-model="backDialog" persistent width="850px">
+      <BackDialog :links="links" @closeDialog="closeBackDialog"></BackDialog>
     </v-dialog>
   </div>
 </template>
@@ -73,9 +72,12 @@ export default {
     format: null,
     file: null,
     links: [],
-    backDialog: false,
+    backDialog: false
   }),
   methods: {
+    closeBackDialog() {
+      this.backDialog = false;
+    },
     cardClick(data) {
       this.windowFlag = data.flag;
       this.windowDialog = true;
@@ -118,7 +120,7 @@ export default {
 .right {
   margin-bottom: 30px;
   padding: 0;
-  max-width: 293px;
+  max-width: 614px;
   position: absolute;
   right: 0;
   width: 100%;
@@ -127,7 +129,7 @@ export default {
 .left {
   float: left;
   margin-right: 28px;
-  max-width: 614px;
+  max-width: 293px;
   width: 100%;
 }
 </style>

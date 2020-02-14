@@ -16,6 +16,7 @@ export default function install(_Vue) {
     _Vue.prototype.NO_EMPTY_CATEGORY = "请填入分类名称";
     _Vue.prototype.NO_EMPTY_FORMAT = "请选择浏览器的格式";
     _Vue.prototype.NO_EMPTY_FILE = "请上传文件";
+    _Vue.prototype.NO_EMTPY_SELECT_CATEGORY = "至少选择一个分类";
 
     _Vue.prototype.INCORRECT_DOMAIN = "用户名不能含有特殊字符";
     _Vue.prototype.INCORRECT_EMAIL = "邮箱格式不正确";
@@ -25,6 +26,7 @@ export default function install(_Vue) {
 
     _Vue.prototype.COLLECT_SUCCESS = "收藏成功";
     _Vue.prototype.ALREADY_COLLECT = "已经收藏";
+    _Vue.prototype.ADD_SUCCESS = "成功添加";
 
     _Vue.prototype.DELETE_COLLECT_SUCCESS = "取消收藏成功";
 
