@@ -52,26 +52,35 @@
           :search="search"
           :items="categorys"
           class="elevation-1"
+          height="450px"
           show-select
           hide-default-header
           hide-default-footer
         ></v-data-table>
         <v-card-actions>
+          <v-btn text color="warning" @click="addCategoryDialog = true">新增分类</v-btn>
           <v-spacer></v-spacer>
           <v-btn text color="grey" @click="dialog = false">关闭</v-btn>
           <v-btn text color="info" @click="sureSelect">确定</v-btn>
         </v-card-actions>
       </v-card>
     </v-dialog>
+    <v-dialog v-model="addCategoryDialog" max-width="600" data-app="true">
+      <AddCategory @closeDialog="addCategoryDialog = false" @refresh="refreshCategory"></AddCategory>
+    </v-dialog>
   </v-card>
 </template>
 
 <script>
 import { getCategoryByDomain, addCategoryLink } from "@/api/domain/mine.api.js";
+import AddCategory from "@/components/domain/mine/left/AddCategory";
 
 export default {
   name: "BackDialog",
   props: ["links"],
+  components: {
+    AddCategory
+  },
   data: () => ({
     headers: [
       {
@@ -86,7 +95,8 @@ export default {
     categoryName: "",
     search: "",
     selected: [],
-    selectedLink: null
+    selectedLink: null,
+    addCategoryDialog: false
   }),
   methods: {
     closeDialog() {
@@ -127,11 +137,11 @@ export default {
           userId: user.id,
           url: this.selectedLink.url,
           name: this.selectedLink.name,
-          icon: this.selectedLink.icon,
+          icon: this.selectedLink.icon
         }).then(res => {
-          if(res.data.code === 0) {
+          if (res.data.code === 0) {
             this.$snackbar.success(this.ADD_SUCCESS);
-            this.$emit("refreshMineCategory")
+            this.$emit("refreshMineCategory");
           } else {
             this.$snackbar.error(res.data.message);
           }
@@ -139,6 +149,10 @@ export default {
         this.dialog = false;
         this.selected = [];
       }
+    },
+    refreshCategory() {
+      this.loadCategory();
+      this.addCategoryDialog = false;
     }
   }
 };
