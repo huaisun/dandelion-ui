@@ -28,10 +28,47 @@
             <Mine ref="mine" @refreshCollect="refreshCollect"></Mine>
           </v-tab-item>
           <v-tab-item value="collect">
-            <Collect ref="collect"></Collect>
+            <Collect v-if="$store.state.domain.authority.edit" ref="collect"></Collect>
+            <v-row v-else>
+              <v-col cols="6">
+                <h3>登录后可用</h3>
+              </v-col>
+              <v-col cols="6">
+                <v-col>
+                  <v-btn color="primary" width="100%">
+                    <v-icon>fingerprint</v-icon>登录
+                  </v-btn>
+                </v-col>
+                <v-col>
+                  <v-btn color="warning" width="100%">
+                    <v-icon>adb</v-icon>注册
+                  </v-btn>
+                </v-col>
+              </v-col>
+            </v-row>
           </v-tab-item>
           <v-tab-item value="local">
-            <Local @refreshMineCategory="refreshMineCategory"></Local>
+            <Local
+              v-if="$store.state.domain.authority.edit"
+              @refreshMineCategory="refreshMineCategory"
+            ></Local>
+            <v-row v-else>
+              <v-col cols="6">
+                <h3>登录后可用</h3>
+              </v-col>
+              <v-col cols="6">
+                <v-col>
+                  <v-btn color="primary" width="100%">
+                    <v-icon>fingerprint</v-icon>登录
+                  </v-btn>
+                </v-col>
+                <v-col>
+                  <v-btn color="warning" width="100%">
+                    <v-icon>adb</v-icon>注册
+                  </v-btn>
+                </v-col>
+              </v-col>
+            </v-row>
           </v-tab-item>
         </v-tabs-items>
       </div>
@@ -42,6 +79,7 @@
 import Mine from "./mine/Mine";
 import Collect from "./collect/Collect";
 import Local from "./local/Local";
+import { mapActions } from "vuex";
 
 export default {
   name: "Entrance",
@@ -61,8 +99,16 @@ export default {
   }),
   created() {
     // 配置网页域名规则
+    this.loadLocalStoryUser();
   },
   methods: {
+    ...mapActions("domain", ["putAuthorityEdit"]),
+    loadLocalStoryUser() {
+      let user = JSON.parse(localStorage.getItem("user"));
+      if (user == null) {
+        this.putAuthorityEdit(false);
+      }
+    },
     refreshCollect() {
       this.$refs.collect.loadCollectCategorys();
     },

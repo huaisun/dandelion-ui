@@ -19,10 +19,10 @@
           <v-list-item-content @click="urlClick(item)">
             <v-list-item-title v-text="item.name"></v-list-item-title>
           </v-list-item-content>
-          <v-list-item-action style="margin: 0">
+          <v-list-item-action v-if="$store.state.domain.authority.edit" style="margin: 0">
             <v-menu offset-y>
               <template v-slot:activator="{ on }">
-                <v-btn v-show="$store.state.domain.authority.edit" v-on="on" icon>
+                <v-btn v-on="on" icon>
                   <v-icon>more_vert</v-icon>
                 </v-btn>
               </template>
@@ -47,16 +47,16 @@
     </v-card-text>
     <v-card-actions>
       <v-spacer></v-spacer>
-      <v-btn icon @click="addLinkCategory">
+      <v-btn v-if="$store.state.domain.authority.edit" icon @click="addLinkCategory">
         <v-icon color="primary">playlist_add</v-icon>
       </v-btn>
-      <v-btn icon @click="editCategory">
+      <v-btn v-if="$store.state.domain.authority.edit" icon @click="editCategory">
         <v-icon color="green">edit_location</v-icon>
       </v-btn>
-      <v-btn icon @click="collectCategory">
+      <v-btn v-if="$store.state.domain.authority.edit" icon @click="collectCategory">
         <v-icon color="error">mdi-heart</v-icon>
       </v-btn>
-      <v-btn icon @click="deleteCategory">
+      <v-btn v-if="$store.state.domain.authority.edit" icon @click="deleteCategory">
         <v-icon color="grey">delete_outline</v-icon>
       </v-btn>
       <v-btn color="grey" text @click="closeDialog">关闭</v-btn>
@@ -104,7 +104,7 @@ export default {
     editLinkDialog: false
   }),
   methods: {
-    cardClick(){},
+    cardClick() {},
     /**注册store方法 */
     ...mapActions("domain", ["putCategoryForm", "putLinkForm"]),
     closeDialog() {
@@ -135,7 +135,7 @@ export default {
       let user = JSON.parse(localStorage.getItem("user"));
       addCategoryUser({ id: this.category.id, userId: user.id }).then(res => {
         if (res.data.code === 0) {
-          this.$emit("refreshCollect")
+          this.$emit("refreshCollect");
           this.$snackbar.success(this.COLLECT_SUCCESS);
         } else {
           this.$snackbar.error(res.data.message);

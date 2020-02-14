@@ -153,6 +153,7 @@ export default {
     refreshCategory() {
       this.loadCategory();
       this.addCategoryDialog = false;
+      this.$emit("refreshMineCategory");
     }
   }
 };

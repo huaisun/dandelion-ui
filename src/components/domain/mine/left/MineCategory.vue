@@ -1,6 +1,6 @@
 <template>
   <v-row dense>
-    <v-col cols="6">
+    <v-col v-if="$store.state.domain.authority.edit" cols="6">
       <v-card dark color="#952175" @click="addCategory">
         <div class="d-flex flex-no-wrap justify-space-between">
           <div>

@@ -4,7 +4,7 @@
       <v-list-item-content>
         <v-list-item-subtitle>
           <span>喜欢</span>
-          <span style="float: right">
+          <span v-if="$store.state.domain.authority.edit" style="float: right">
             <div v-if="editFlag">
               <v-btn small icon @click="successEdit">
                 <v-icon color="success">done</v-icon>
