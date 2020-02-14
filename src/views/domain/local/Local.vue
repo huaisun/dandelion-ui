@@ -41,11 +41,19 @@
         </v-list-item>
       </v-list>
     </div>
+    <v-dialog v-model="lodingDialog" persistent width="300">
+      <v-card color="primary" dark>
+        <v-card-text>
+          请稍后
+          <v-progress-linear indeterminate color="white" class="mb-0"></v-progress-linear>
+        </v-card-text>
+      </v-card>
+    </v-dialog>
     <v-dialog v-model="windowDialog" width="1080px">
       <InnerDialog :flag="windowFlag" @closeDialog="closeInnerDialog"></InnerDialog>
     </v-dialog>
     <v-dialog v-model="backDialog" persistent width="850px">
-      <BackDialog :links="links" @closeDialog="closeBackDialog"></BackDialog>
+      <BackDialog :links="links" @closeDialog="closeBackDialog" @refreshMineCategory="refreshMineCategory"></BackDialog>
     </v-dialog>
   </div>
 </template>
@@ -72,7 +80,8 @@ export default {
     format: null,
     file: null,
     links: [],
-    backDialog: false
+    backDialog: false,
+    lodingDialog: false
   }),
   methods: {
     closeBackDialog() {
@@ -93,21 +102,30 @@ export default {
       } else if (this.file == null) {
         this.$snackbar.warning(this.NO_EMPTY_FILE);
       } else {
-        let form = new FormData();
-        form.append("format", this.format);
-        form.append("file", this.file);
-        uploadLocalFile(form).then(res => {
-          if (res.data.data == null) {
-            this.$snackbar.error(this.HANDLE_ERROR);
-          } else {
-            this.links = res.data.data;
-            this.backDialog = true;
-          }
-        });
+        if (this.file.size > 5242880) {
+          this.$snackbar.error(this.MAX_FILE_ERROR);
+        } else {
+          this.lodingDialog = true;
+          let form = new FormData();
+          form.append("format", this.format);
+          form.append("file", this.file);
+          uploadLocalFile(form).then(res => {
+            this.lodingDialog = false;
+            if (res.data.data == null) {
+              this.$snackbar.error(this.HANDLE_ERROR);
+            } else {
+              this.links = res.data.data;
+              this.backDialog = true;
+            }
+          });
+        }
       }
     },
     uploadFile(data) {
       this.file = data;
+    },
+    refreshMineCategory() {
+      this.$emit("refreshMineCategory");
     }
   }
 };

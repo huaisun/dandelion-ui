@@ -25,13 +25,13 @@
       <div class="main-content mx-auto">
         <v-tabs-items class="tab-item-background" v-model="tab">
           <v-tab-item value="mine">
-            <Mine @refreshCollect="refreshCollect"></Mine>
+            <Mine ref="mine" @refreshCollect="refreshCollect"></Mine>
           </v-tab-item>
           <v-tab-item value="collect">
             <Collect ref="collect"></Collect>
           </v-tab-item>
           <v-tab-item value="local">
-            <Local></Local>
+            <Local @refreshMineCategory="refreshMineCategory"></Local>
           </v-tab-item>
         </v-tabs-items>
       </div>
@@ -65,6 +65,9 @@ export default {
   methods: {
     refreshCollect() {
       this.$refs.collect.loadCollectCategorys();
+    },
+    refreshMineCategory() {
+      this.$refs.mine.refreshCategory();
     }
   }
 };

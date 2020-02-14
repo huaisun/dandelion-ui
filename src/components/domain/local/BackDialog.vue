@@ -130,7 +130,10 @@ export default {
           icon: this.selectedLink.icon,
         }).then(res => {
           if(res.data.code === 0) {
-            this.$snackbar.success(this.ADD_SUCCESS)
+            this.$snackbar.success(this.ADD_SUCCESS);
+            this.$emit("refreshMineCategory")
+          } else {
+            this.$snackbar.error(res.data.message);
           }
         });
         this.dialog = false;

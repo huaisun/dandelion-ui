@@ -1,7 +1,7 @@
 <template>
   <div style="height: 100%">
     <div class="left">
-      <MineCategory @refreshLoveLink="refreshLoveLink" @refreshCollect="refreshCollect"></MineCategory>
+      <MineCategory ref="mine_category" @refreshLoveLink="refreshLoveLink" @refreshCollect="refreshCollect"></MineCategory>
     </div>
     <div class="right">
       <v-list dense nav class="py-0 avator-background">
@@ -66,6 +66,9 @@ export default {
     },
     refreshCollect(){
       this.$emit("refreshCollect");
+    },
+    refreshCategory() {
+      this.$refs.mine_category.loadCategory();
     }
   }
 };

@@ -31,4 +31,5 @@ export default function install(_Vue) {
     _Vue.prototype.DELETE_COLLECT_SUCCESS = "取消收藏成功";
 
     _Vue.prototype.HANDLE_ERROR = "程序错误";
+    _Vue.prototype.MAX_FILE_ERROR = "超出最大文件";
 }
