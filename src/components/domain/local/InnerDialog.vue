@@ -54,6 +54,9 @@ import Two from "@/assets/photos/chrome/two.png";
 import Three from "@/assets/photos/chrome/three.png";
 import Four from "@/assets/photos/chrome/four.png";
 import Five from "@/assets/photos/chrome/five.png";
+import Six from '@/assets/photos/chrome/six.png';
+import Seven from '@/assets/photos/chrome/seven.png';
+import Eight from '@/assets/photos/chrome/eight.png';
 
 export default {
   name: "InnerDialog",
@@ -71,7 +74,8 @@ export default {
         img: [Four, Five]
       },
       {
-        tip: "3、将导出的书签数据文件上传到浏览器中，点击分析"
+        tip: "3、将导出的书签数据文件上传到浏览器中，点击分析",
+        img: [Six, Seven, Eight]
       }
     ],
     imgDialog: null,
