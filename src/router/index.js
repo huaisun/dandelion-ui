@@ -1,9 +1,9 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
-import Active from '../views/com/Active'
 
 // 主页
-import Home from '../views/home/Home'
+import Login from '../views/home/Login'
+import Register from '../views/home/Register'
 
 // 入口
 import Entrance from '../views/domain/Entrance'
@@ -15,16 +15,12 @@ Vue.use(VueRouter)
 
 const routes = [{
     path: '/',
-    name: 'Home',
-    component: Home,
+    name: 'login',
+    component: Login,
 }, {
-    path: '/sign',
-    name: 'Sign',
-    component: Home,
-}, {
-    path: '/active',
-    name: 'active',
-    component: Active
+    path: '/sign-up',
+    name: 'register',
+    component: Register
 }, {
     path: '/404',
     name: 're-404',
