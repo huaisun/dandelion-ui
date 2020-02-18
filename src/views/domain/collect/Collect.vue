@@ -82,8 +82,9 @@ export default {
     },
     /**加载收藏的分类 */
     loadCollectCategorys() {
+      let user = JSON.parse(localStorage.getItem("user"));
       getCollectCategory({
-        domain: this.$store.state.domain.user.domain
+        domain: user.domain
       }).then(res => {
         this.categorys = res.data.data;
       });

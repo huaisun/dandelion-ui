@@ -4,7 +4,11 @@
       <v-app-bar fixed>
         <div id="app-bar" class="mx-auto">
           <div style="display: inline;">
-            <v-btn style="padding: 0; margin-right: 50px; height: 48px" text>
+            <v-btn
+              style="padding: 0; margin-right: 50px; height: 48px"
+              text
+              @click="imgClick"
+            >
               <img class="img-lch" src="../../assets/photos/lch.png" />
             </v-btn>
           </div>
@@ -12,9 +16,9 @@
             <v-tabs v-model="tab">
               <v-tab
                 v-for="(item, index) in items"
-                v-show="item.show || $store.state.domain.authority.edit"
+                v-show="item.show || $store.state.domain.authority.love"
                 :key="index"
-                v-text="item.title"
+                v-text="item.id === 'mine' && !$store.state.domain.authority.edit ? $store.state.domain.user.domain:item.title"
                 :href="'#' + item.id"
               ></v-tab>
             </v-tabs>
@@ -70,7 +74,7 @@ export default {
     tab: null,
     items: [
       { title: "我的", id: "mine", show: true },
-      { title: "收藏", id: "collect", show: false },
+      { title: "我的收藏", id: "collect", show: false },
       { title: "本地导入", id: "local", show: false }
     ],
     user: JSON.parse(localStorage.getItem("user"))
@@ -99,6 +103,10 @@ export default {
     },
     refreshLoveLink() {
       this.$refs.mine.refreshLoveLink();
+    },
+    imgClick() {
+      this.$router.replace({ path: '/' + this.user.domain});
+      location.reload();
     }
   }
 };

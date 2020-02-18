@@ -49,12 +49,11 @@ export default {
     ...mapActions("domain", ["putAuthorityEdit", "putUserDomain", "putAuthorityLove"]),
     /**进行域名的检测。如果与当前登录的用户相同则赋予编辑权限。否之 */
     checkDomain() {
-      let user = JSON.parse(localStorage.getItem("user"));
       let path = window.location.pathname;
-      if (user != null && path.indexOf(user.domain) === 1) {
+      if (this.user != null && path.indexOf(this.user.domain) === 1) {
         this.putAuthorityEdit(true);
         this.putAuthorityLove(true);
-      } else if(user == null) {
+      } else if(this.user == null) {
         this.putAuthorityEdit(false);
         this.putAuthorityLove(false);
       } else {
