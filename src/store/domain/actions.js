@@ -2,6 +2,9 @@ const actions = {
     putAuthorityEdit(state, v) {
         state.commit('SET_AUTHORITY_EDIT', v);
     },
+    putAuthorityLove(state, v) {
+        state.commit('SET_AUTHORITY_LOVE', v);
+    },
     putUserDomain(state, v) {
         state.commit('SET_USER_DOMAIN', v);
     },

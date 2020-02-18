@@ -1,5 +1,5 @@
 <template>
-  <v-card class="login-card">
+  <v-card class="login-card category-1">
     <v-card-title>
       <v-btn style="padding: 0; margin-right: 50px; height: 48px" text>
         <img style="height: 36px" src="../../assets/photos/lch.png" />
@@ -35,12 +35,21 @@ export default {
   data: () => ({
     domain: "",
     password: "",
-    passwordType: "password",
-    emailRules: [
-      v => !!v || "E-mail is required",
-      v => /.+@.+\..+/.test(v) || "E-mail must be valid"
-    ]
+    passwordType: "password"
   }),
+  created() {
+    // 如果用户已经登录，自动进行跳转到域名页面
+    let user = JSON.parse(localStorage.getItem("user"));
+    if (
+      user != null &&
+      user.domain != null &&
+      user.domain != "" &&
+      user.id != null &&
+      user.id != ""
+    ) {
+      this.$router.push({ path: "/" + user.domain });
+    }
+  },
   methods: {
     ...mapActions(["putUser"]),
     /**更换密码显示类型 */

@@ -20,10 +20,17 @@
             </v-tabs>
           </div>
           <div style="display: inline-block; float: right">
-            <v-btn @click="logoutClick" title="退出登录" v-if="$store.state.domain.authority.edit" icon>
+            <v-btn @click="logoutClick" title="退出登录" v-if="user != null" icon>
               <v-icon>exit_to_app</v-icon>
             </v-btn>
-            <v-btn v-else>登录</v-btn>
+            <v-row v-else>
+              <v-col cols="6">
+                <v-btn color="primary" dark @click="$router.push({ name: 'login' })">登录</v-btn>
+              </v-col>
+              <v-col cols="6">
+                <v-btn color="grey" dark @click="$router.push({ name: 'register' })">注册</v-btn>
+              </v-col>
+            </v-row>
           </div>
         </div>
       </v-app-bar>
@@ -35,7 +42,7 @@
             <Mine ref="mine" @refreshCollect="refreshCollect"></Mine>
           </v-tab-item>
           <v-tab-item value="collect">
-            <Collect ref="collect"></Collect>
+            <Collect ref="collect" @refreshLoveLink="refreshLoveLink"></Collect>
           </v-tab-item>
           <v-tab-item value="local">
             <Local @refreshMineCategory="refreshMineCategory"></Local>
@@ -65,7 +72,8 @@ export default {
       { title: "我的", id: "mine", show: true },
       { title: "收藏", id: "collect", show: false },
       { title: "本地导入", id: "local", show: false }
-    ]
+    ],
+    user: JSON.parse(localStorage.getItem("user"))
   }),
   created() {
     // 配置网页域名规则
@@ -74,8 +82,7 @@ export default {
   methods: {
     ...mapActions("domain", ["putAuthorityEdit"]),
     loadLocalStoryUser() {
-      let user = JSON.parse(localStorage.getItem("user"));
-      if (user == null) {
+      if (this.user == null) {
         this.putAuthorityEdit(false);
       }
     },
@@ -89,6 +96,9 @@ export default {
     logoutClick() {
       localStorage.clear();
       this.$router.push({ name: "login" });
+    },
+    refreshLoveLink() {
+      this.$refs.mine.refreshLoveLink();
     }
   }
 };

@@ -1,7 +1,11 @@
 <template>
   <div style="height: 100%">
     <div class="left">
-      <MineCategory ref="mine_category" @refreshLoveLink="refreshLoveLink" @refreshCollect="refreshCollect"></MineCategory>
+      <MineCategory
+        ref="mine_category"
+        @refreshLoveLink="refreshLoveLink"
+        @refreshCollect="refreshCollect"
+      ></MineCategory>
     </div>
     <div class="right">
       <v-list dense nav class="py-0 avator-background">
@@ -11,8 +15,8 @@
           </v-list-item-avatar>
 
           <v-list-item-content>
-            <v-list-item-title>huaisun</v-list-item-title>
-            <v-list-item-subtitle>ruiguangsun</v-list-item-subtitle>
+            <v-list-item-title>{{ user != null ? user.domain: ''}}</v-list-item-title>
+            <v-list-item-subtitle>{{ user != null ? user.email: ''}}</v-list-item-subtitle>
           </v-list-item-content>
         </v-list-item>
       </v-list>
@@ -34,22 +38,27 @@ export default {
     MineCategory
   },
   data: () => ({
-    userImage: DefaultJpg
+    userImage: DefaultJpg,
+    user: JSON.parse(localStorage.getItem("user"))
   }),
   created() {
     this.checkDomain();
   },
   methods: {
     /**进行方法读写 */
-    ...mapActions("domain", ["putAuthorityEdit", "putUserDomain"]),
+    ...mapActions("domain", ["putAuthorityEdit", "putUserDomain", "putAuthorityLove"]),
     /**进行域名的检测。如果与当前登录的用户相同则赋予编辑权限。否之 */
     checkDomain() {
       let user = JSON.parse(localStorage.getItem("user"));
       let path = window.location.pathname;
       if (user != null && path.indexOf(user.domain) === 1) {
         this.putAuthorityEdit(true);
-      } else {
+        this.putAuthorityLove(true);
+      } else if(user == null) {
         this.putAuthorityEdit(false);
+        this.putAuthorityLove(false);
+      } else {
+        this.putAuthorityLove(true);
       }
 
       // 进行 domain赋值
@@ -64,7 +73,7 @@ export default {
     refreshLoveLink() {
       this.$refs.love_link_ref.loadLoveLink();
     },
-    refreshCollect(){
+    refreshCollect() {
       this.$emit("refreshCollect");
     },
     refreshCategory() {

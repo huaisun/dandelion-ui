@@ -79,11 +79,11 @@ body {
 }
 
 .category-1 {
-    background-image: linear-gradient( to right, #77A1D3 0%, #79CBCA 51%, #E684AE 100%);
+    background-image: linear-gradient( to right, #70e1f5, #b4d9c6);
 }
 
 .category-2 {
-    background-image: linear-gradient(to right, #77A1D3, #79CBCA)
+    background-image: linear-gradient(to left, #70e1f5, #b4d9c6)
 }
 
 .category:hover {
@@ -92,4 +92,9 @@ body {
 
 .category-detail {
     box-shadow: 0 0 5px #eee;
+}
+
+.error--text {
+    color: #ff5252 !important;
+    caret-color: #ff5252 !important;
 }

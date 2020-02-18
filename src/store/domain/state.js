@@ -1,6 +1,7 @@
 const state = {
     authority: {
         edit: false,
+        love: false
     },
     colors: ['indigo', 'orange', 'primary', 'green', 'teal', 'pink', 'cyan'],
     categroyLinkMenu: [{

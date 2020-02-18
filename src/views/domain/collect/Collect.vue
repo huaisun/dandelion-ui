@@ -25,7 +25,12 @@
       </v-card>
     </v-col>
     <v-dialog v-model="showDialog" width="600px">
-      <LinksDialog :title="title" :links="links" @closeDialog="closeLinksDialog"></LinksDialog>
+      <LinksDialog
+        :title="title"
+        :links="links"
+        @closeDialog="closeLinksDialog"
+        @refreshLoveLink="refreshLoveLink"
+      ></LinksDialog>
     </v-dialog>
     <v-dialog v-model="tipDialog" max-width="390">
       <v-card>
@@ -46,7 +51,7 @@ import {
   getCollectCategory,
   deleteCollectCategory
 } from "@/api/domain/collect.api.js";
-import LinksDialog from "@/components/collect/LinksDialog";
+import LinksDialog from "@/components/domain/collect/LinksDialog";
 
 export default {
   name: "Collect",
@@ -102,10 +107,12 @@ export default {
     /**关闭 */
     closeLinksDialog() {
       this.showDialog = false;
+    },
+    refreshLoveLink() {
+      this.$emit('refreshLoveLink');
     }
   }
 };
 </script>
 <style scoped>
-
 </style>

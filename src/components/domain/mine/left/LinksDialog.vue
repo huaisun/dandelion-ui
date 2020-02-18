@@ -53,7 +53,7 @@
       <v-btn v-if="$store.state.domain.authority.edit" icon @click="editCategory">
         <v-icon color="green">edit_location</v-icon>
       </v-btn>
-      <v-btn v-if="$store.state.domain.authority.edit" icon @click="collectCategory">
+      <v-btn v-if="$store.state.domain.authority.love" icon @click="collectCategory">
         <v-icon color="error">mdi-heart</v-icon>
       </v-btn>
       <v-btn v-if="$store.state.domain.authority.edit" icon @click="deleteCategory">
@@ -168,6 +168,7 @@ export default {
           name: data.name
         }).then(res => {
           if (res.data.code === 0) {
+            this.$snackbar.success(this.COLLECT_SUCCESS);
             this.$emit("refreshLoveLink");
           } else {
             this.$snackbar.error(res.data.message);

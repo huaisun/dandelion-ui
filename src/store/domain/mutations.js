@@ -2,6 +2,9 @@ const mutations = {
     SET_AUTHORITY_EDIT(state, v) {
         state.authority.edit = v;
     },
+    SET_AUTHORITY_LOVE(state, v) {
+        state.authority.love = v;
+    },
     SET_USER_DOMAIN(state, v) {
         state.user.domain = v;
     },
